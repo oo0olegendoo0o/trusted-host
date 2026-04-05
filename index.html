@@ -94,7 +94,7 @@
   }
   .hero-bg-photo {
     position: absolute; inset: 0; z-index: 0;
-    background: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=60&fit=crop') center/cover no-repeat;
+    background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=70&fit=crop') center/cover no-repeat;
     opacity: 0.12;
   }
   #hero-canvas {
@@ -379,100 +379,53 @@
     font-family: var(--font-display); font-size: 26px;
     color: var(--navy); font-weight: 600;
   }
-  /* ── PARTNERS SLIDER - mobile-first ── */
-  .slider-track-wrap {
-    overflow: hidden; position: relative; padding: 8px 0;
+  /* ── PARTNERS SLIDER - KozyGuru style ── */
+  #partners { background: var(--off-white); padding: 60px 0 50px; }
+  .partners-header { text-align:center; margin-bottom:36px; padding:0 2rem; }
+  .partners-label { font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--gray-500); margin-bottom:10px; display:block; }
+  .partners-title { font-family:var(--font-display); font-size:24px; color:var(--navy); font-weight:600; }
+  .slider-viewport {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 8px 0;
   }
-  .slider-track-wrap::before,
-  .slider-track-wrap::after {
-    content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 80px;
+  .slider-viewport::before,
+  .slider-viewport::after {
+    content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 100px;
     pointer-events: none;
   }
-  .slider-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--white), transparent); }
-  .slider-track-wrap::after  { right: 0; background: linear-gradient(270deg, var(--white), transparent); }
-  .slider-track {
-    display: flex; align-items: center;
+  .slider-viewport::before { left:0; background:linear-gradient(90deg, var(--off-white), transparent); }
+  .slider-viewport::after  { right:0; background:linear-gradient(270deg, var(--off-white), transparent); }
+  .slider-inner {
+    display: flex;
+    align-items: center;
     width: max-content;
-    animation: slide 18s linear infinite;
+    animation: kozySlide 22s linear infinite;
     will-change: transform;
   }
-  @keyframes slide {
+  .slider-inner:hover { animation-play-state: paused; }
+  @keyframes kozySlide {
     from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    to   { transform: translateX(var(--slide-dist, -50%)); }
   }
-  .partner-logo {
+  .kozy-logo-item {
     flex: 0 0 auto;
-    height: 72px; width: 160px;
-    margin: 0 10px;
-    border: 1px solid var(--gray-200);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--white);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    height: 64px;
+    width: 160px;
+    margin: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: grayscale(100%) opacity(0.55);
+    transition: filter 0.3s;
   }
-  .partner-logo:hover {
-    border-color: rgba(37,99,235,0.25);
-    box-shadow: 0 4px 14px rgba(13,44,84,0.07);
+  .kozy-logo-item:hover { filter: grayscale(0%) opacity(1); }
+  .kozy-logo-item img { max-width: 130px; max-height: 44px; object-fit: contain; display:block; }
+  @media (max-width:600px) {
+    .kozy-logo-item { width:120px; margin:0 10px; }
+    .kozy-logo-item img { max-width:100px; max-height:36px; }
   }
-  .partner-logo svg { max-width: 120px; height: 32px; display: block; }
-  @media (max-width: 600px) {
-    .partner-logo { width: 130px; height: 60px; margin: 0 7px; }
-    .partner-logo svg { max-width: 100px; height: 26px; }
-    .slider-track { animation-duration: 18s; }
-  }
-
-  #reviews {
-    background: var(--white); padding: 100px 0; overflow: hidden;
-    position: relative;
-  }
-  #reviews::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0; width: 42%;
-    background: url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=60&fit=crop') center/cover no-repeat;
-    opacity: 0.12;
-  }
-  .reviews-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
-  .reviews-layout { display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: start; }
-  .reviews-intro-card {
-    background: rgba(255,255,255,0.92); border-radius: 16px;
-    padding: 36px 32px; border: 1px solid var(--gray-200);
-    position: sticky; top: 100px;
-  }
-  .reviews-intro-card h2 {
-    font-family: var(--font-display); font-size: 1.9rem;
-    font-weight: 700; color: var(--navy); margin-bottom: 14px; line-height: 1.2;
-  }
-  .reviews-intro-card p { font-size: 14px; color: var(--gray-500); line-height: 1.65; margin-bottom: 24px; }
-  .reviews-platform-badges { display: flex; gap: 10px; flex-wrap: wrap; }
-  .platform-badge {
-    display: flex; align-items: center; gap: 6px;
-    background: var(--off-white); border: 1px solid var(--gray-200);
-    border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--gray-700);
-  }
-  .reviews-stack { display: flex; flex-direction: column; gap: 20px; }
-  .review-card {
-    background: var(--white); border-radius: 14px;
-    border: 1px solid var(--gray-200); padding: 28px 28px 22px;
-    transition: box-shadow 0.2s, transform 0.2s;
-  }
-  .review-card:hover { box-shadow: 0 8px 32px rgba(13,44,84,0.09); transform: translateY(-2px); }
-  .review-platform { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-  .airbnb-logo-inline { display: flex; align-items: center; gap: 6px; }
-  .airbnb-icon { color: #FF5A5F; font-size: 20px; line-height: 1; }
-  .airbnb-wordmark { font-size: 15px; font-weight: 700; color: #484848; font-family: var(--font-body); }
-  .booking-wordmark { font-size: 14px; font-weight: 700; }
-  .review-stars { display: flex; gap: 2px; margin-bottom: 14px; }
-  .review-stars span { color: #2563EB; font-size: 16px; }
-  .review-quote { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 18px; font-style: italic; }
-  .review-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--gray-200); padding-top: 16px; }
-  .review-avatar {
-    width: 42px; height: 42px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 14px; font-weight: 600;
-    color: white; flex-shrink: 0;
-  }
-  .review-author-info h4 { font-size: 14px; font-weight: 600; color: var(--navy); }
-  .review-author-info p { font-size: 12px; color: var(--gray-500); }
 
   /* ── REVIEWS ── */
   #guests { background: var(--off-white); }
@@ -1031,7 +984,7 @@
   <div class="hero-orb hero-orb-2"></div>
   <div class="hero-inner">
     <div class="hero">
-      <div class="hero-badge">Central Melbourne's Trusted Property Host</div>
+      <div class="hero-badge">Airbnb Property Management In Melbourne</div>
       <h1>Your property,<span class="hero-em-wrap">
         <em class="hero-tagline-wrap"><span class="hero-tagline-cycle" style="color:var(--gold);">our hospitality.</span></em>
         <em class="hero-tagline-cycle-2" style="color:var(--gold);">zero stress.</em>
@@ -1061,51 +1014,24 @@
     </div>
 
     <div class="hero-card-side">
-      <div class="property-card">
-        <div class="property-card-img" style="background: #0f3055; position:relative; overflow:hidden;">
-          <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80&fit=crop" alt="Melbourne property" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
-          <div class="prop-badge">Live Property</div>
+      <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:14px; overflow:hidden; backdrop-filter:blur(10px);">
+        <div style="background:rgba(184,151,58,0.12); border-bottom:1px solid rgba(184,151,58,0.2); padding:16px 22px; display:flex; align-items:center; gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8973A" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          <span style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold);">Free Property Valuation</span>
         </div>
-        <div class="property-card-body">
-          <div class="prop-location">Southbank, Melbourne VIC</div>
-          <div class="prop-title">Yarra River View — 2 Bed Apartment</div>
-          <div class="prop-metrics">
-            <div class="prop-metric">
-              <div class="prop-metric-val">$4,620</div>
-              <div class="prop-metric-label">This Month</div>
-            </div>
-            <div class="prop-metric">
-              <div class="prop-metric-val">96%</div>
-              <div class="prop-metric-label">Occupancy</div>
-            </div>
-            <div class="prop-metric">
-              <div class="prop-metric-val">4.97</div>
-              <div class="prop-metric-label">★ Rating</div>
-            </div>
+        <div style="padding:22px;">
+          <div style="font-family:var(--font-display); font-size:1.15rem; font-weight:600; color:white; margin-bottom:4px;">What can your property earn?</div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:18px;">Get your free earnings estimate — no obligation.</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+            <div><label style="display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:5px; letter-spacing:0.05em;">FIRST NAME</label><input type="text" placeholder="Alex" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.08); color:white; font-family:var(--font-body); font-size:13px; outline:none;"></div>
+            <div><label style="display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:5px; letter-spacing:0.05em;">LAST NAME</label><input type="text" placeholder="Smith" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.08); color:white; font-family:var(--font-body); font-size:13px; outline:none;"></div>
           </div>
-        </div>
-      </div>
-      <div class="trust-pills">
-        <div class="trust-pill"><span class="dot"></span>Fully Insured</div>
-        <div class="trust-pill"><span class="dot"></span>24/7 Guest Support</div>
-        <div class="trust-pill"><span class="dot"></span>Licensed Manager</div>
-        <div class="trust-pill"><span class="dot"></span>Dynamic Pricing</div>
-      </div>
-      <!-- Second mini property card -->
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;">
-        <div style="border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); position:relative;">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&q=75&fit=crop" alt="Carlton property" style="width:100%; height:90px; object-fit:cover; display:block;">
-          <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(13,44,84,0.85)); padding:8px 10px;">
-            <div style="font-size:10px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.08em;">Carlton</div>
-            <div style="font-size:12px; font-weight:600; color:#fff;">4.96 ★ · 93% occ.</div>
-          </div>
-        </div>
-        <div style="border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); position:relative;">
-          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=300&q=75&fit=crop" alt="Fitzroy property" style="width:100%; height:90px; object-fit:cover; display:block;">
-          <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(13,44,84,0.85)); padding:8px 10px;">
-            <div style="font-size:10px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.08em;">Fitzroy</div>
-            <div style="font-size:12px; font-weight:600; color:#fff;">4.98 ★ · 97% occ.</div>
-          </div>
+          <div style="margin-bottom:10px;"><label style="display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:5px; letter-spacing:0.05em;">EMAIL</label><input type="email" placeholder="alex@example.com" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.08); color:white; font-family:var(--font-body); font-size:13px; outline:none;"></div>
+          <div style="margin-bottom:10px;"><label style="display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:5px; letter-spacing:0.05em;">PHONE</label><input type="tel" placeholder="+61 4XX XXX XXX" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.08); color:white; font-family:var(--font-body); font-size:13px; outline:none;"></div>
+          <div style="margin-bottom:14px;"><label style="display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:5px; letter-spacing:0.05em;">SUBURB / POSTCODE</label><input type="text" placeholder="e.g. Southbank 3006" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.08); color:white; font-family:var(--font-body); font-size:13px; outline:none;"></div>
+          <div style="margin-bottom:16px;"><label style="display:block; font-size:11px; font-weight:600; color:rgba(255,255,255,0.6); margin-bottom:5px; letter-spacing:0.05em;">PROPERTY TYPE</label><select style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(30,60,100,0.6); color:white; font-family:var(--font-body); font-size:13px; outline:none;"><option>Studio / 1 Bed Apartment</option><option>2–3 Bedroom Apartment</option><option>Townhouse</option><option>House</option></select></div>
+          <button style="width:100%; background:var(--gold); color:var(--navy); font-family:var(--font-body); font-size:14px; font-weight:700; padding:14px; border:none; border-radius:6px; cursor:pointer; letter-spacing:0.04em; transition:background 0.2s;" onmouseover="this.style.background='#d4aa48'" onmouseout="this.style.background='var(--gold)'">Get My Free Estimate →</button>
+          <div style="text-align:center; margin-top:10px; font-size:11px; color:rgba(255,255,255,0.35);">No obligation · Response within 24 hours</div>
         </div>
       </div>
     </div>
@@ -1121,16 +1047,16 @@
       <p class="section-desc">From listing creation to guest checkout, we handle everything — so you collect the revenue without the headaches.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
+      <div class="service-card" style="cursor:pointer; position:relative;" onclick="openServiceModal(this)"><div style="position:absolute; top:14px; right:16px; width:24px; height:24px; border-radius:50%; background:var(--blue-light); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:300; color:var(--blue); line-height:1; pointer-events:none;">+</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
           </svg>
         </div>
         <h3>Listing & Setup</h3>
-        <p>Professional photography, compelling copy, and multi-platform listing across Airbnb, Booking.com, and Stayz to maximise visibility from day one.</p>
+        <p>Professional photography, compelling copy, and multi-platform listing across Airbnb, Booking.com, Stayz, VRBO, Expedia — and more. Maximum visibility from day one.</p>
       </div>
-      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
+      <div class="service-card" style="cursor:pointer; position:relative;" onclick="openServiceModal(this)"><div style="position:absolute; top:14px; right:16px; width:24px; height:24px; border-radius:50%; background:var(--blue-light); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:300; color:var(--blue); line-height:1; pointer-events:none;">+</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
@@ -1139,7 +1065,7 @@
         <h3>Dynamic Pricing</h3>
         <p>Smart revenue management using real-time Melbourne market data — events, seasons, demand — to ensure your property earns at its full potential every night.</p>
       </div>
-      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
+      <div class="service-card" style="cursor:pointer; position:relative;" onclick="openServiceModal(this)"><div style="position:absolute; top:14px; right:16px; width:24px; height:24px; border-radius:50%; background:var(--blue-light); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:300; color:var(--blue); line-height:1; pointer-events:none;">+</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
@@ -1148,7 +1074,7 @@
         <h3>Guest Management</h3>
         <p>Seamless communication, instant bookings, and 24/7 guest support. We screen guests carefully and handle everything from check-in to checkout.</p>
       </div>
-      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
+      <div class="service-card" style="cursor:pointer; position:relative;" onclick="openServiceModal(this)"><div style="position:absolute; top:14px; right:16px; width:24px; height:24px; border-radius:50%; background:var(--blue-light); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:300; color:var(--blue); line-height:1; pointer-events:none;">+</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
@@ -1157,7 +1083,7 @@
         <h3>Reporting & Analytics</h3>
         <p>Monthly owner reports with clear income statements, occupancy trends, and performance benchmarks so you always know exactly how your asset is performing.</p>
       </div>
-      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
+      <div class="service-card" style="cursor:pointer; position:relative;" onclick="openServiceModal(this)"><div style="position:absolute; top:14px; right:16px; width:24px; height:24px; border-radius:50%; background:var(--blue-light); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:300; color:var(--blue); line-height:1; pointer-events:none;">+</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
@@ -1166,7 +1092,7 @@
         <h3>Housekeeping & Maintenance</h3>
         <p>Hotel-standard turnovers after every stay, plus a vetted local trades network for responsive repairs. Your property is always presented at its best.</p>
       </div>
-      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
+      <div class="service-card" style="cursor:pointer; position:relative;" onclick="openServiceModal(this)"><div style="position:absolute; top:14px; right:16px; width:24px; height:24px; border-radius:50%; background:var(--blue-light); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:300; color:var(--blue); line-height:1; pointer-events:none;">+</div>
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -1185,13 +1111,27 @@
     <span class="partners-label">Our Trusted Partners</span>
     <h2 class="partners-title">Listed where guests search</h2>
   </div>
-  <div class="slider-track-wrap">
-    <div class="slider-track" id="slider">
-      <!-- logos injected by JS -->
+  <div class="slider-viewport" id="sliderViewport">
+    <div class="slider-inner" id="sliderInner">
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e4b6be027bbaf3475_Airbnb.webp" alt="Airbnb" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e4c8c19aedfb7be00_Agoda.webp" alt="Agoda" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e1ea8b98eb94b342d_bookingCom.webp" alt="Booking.com" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59f90105c090a52e493_tripadvisor.webp" alt="Tripadvisor" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e8b3ff4d151c069ad_Expedia.webp" alt="Expedia" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59f5d087be0061a0d9f_HotelsCom.webp" alt="Hotels.com" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59f5d087be0061a0d9a_vrbo.webp" alt="Vrbo" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e27d0a3dabac6648f_Wotif.webp" alt="Wotif" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e4b6be027bbaf3475_Airbnb.webp" alt="Airbnb" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e4c8c19aedfb7be00_Agoda.webp" alt="Agoda" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e1ea8b98eb94b342d_bookingCom.webp" alt="Booking.com" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59f90105c090a52e493_tripadvisor.webp" alt="Tripadvisor" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e8b3ff4d151c069ad_Expedia.webp" alt="Expedia" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59f5d087be0061a0d9f_HotelsCom.webp" alt="Hotels.com" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59f5d087be0061a0d9a_vrbo.webp" alt="Vrbo" loading="lazy"></div>
+      <div class="kozy-logo-item"><img src="https://cdn.prod.website-files.com/66cc09d40ab6a36ef0db2e99/66ceb59e27d0a3dabac6648f_Wotif.webp" alt="Wotif" loading="lazy"></div>
     </div>
   </div>
 </section>
-
 <!-- GUESTS -->
 <section id="guests">
   <div class="container">
@@ -1250,104 +1190,6 @@
   </div>
 </section>
 
-<!-- REVIEWS -->
-<section id="reviews">
-  <div class="reviews-inner">
-    <div class="reviews-layout">
-      <div class="reviews-intro-card">
-        <h2>Insights from Our Guests</h2>
-        <p>Genuine reviews from guests who've stayed in our Melbourne properties, shared directly from Airbnb and Booking.com.</p>
-        <div class="reviews-platform-badges">
-          <div class="platform-badge">
-            <span style="color:#FF5A5F; font-size:14px;">⬡</span> Airbnb
-          </div>
-          <div class="platform-badge">
-            <span style="color:#003580; font-weight:900; font-size:13px;">B</span>
-            <span style="color:#003580;">Booking</span><span style="color:#E31837;">.com</span>
-          </div>
-        </div>
-        <div style="margin-top:28px; display:flex; align-items:center; gap:12px; padding:16px; background:var(--blue-light); border-radius:10px;">
-          <div style="font-family:var(--font-display); font-size:2.2rem; font-weight:700; color:var(--navy); line-height:1;">4.97</div>
-          <div>
-            <div style="color:#2563EB; font-size:15px; letter-spacing:2px;">★★★★★</div>
-            <div style="font-size:12px; color:var(--gray-500); margin-top:2px;">Average across all platforms</div>
-          </div>
-        </div>
-      </div>
-      <div class="reviews-stack">
-        <!-- Review 1 -->
-        <div class="review-card">
-          <div class="review-platform">
-            <div class="airbnb-logo-inline">
-              <span class="airbnb-icon">♦</span>
-              <span class="airbnb-wordmark">airbnb</span>
-            </div>
-          </div>
-          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <p class="review-quote">"Absolutely stunning apartment with incredible Yarra River views. The place was spotlessly clean, beautifully styled, and everything was exactly as described. The host was incredibly responsive and made check-in seamless. Will 100% be back."</p>
-          <div class="review-author">
-            <div class="review-avatar" style="background:linear-gradient(135deg,#2563EB,#1a4880);">JL</div>
-            <div class="review-author-info">
-              <h4>James L.</h4>
-              <p>Southbank · Yarra River View Apartment</p>
-            </div>
-          </div>
-        </div>
-        <!-- Review 2 -->
-        <div class="review-card">
-          <div class="review-platform">
-            <div class="airbnb-logo-inline">
-              <span class="airbnb-icon">♦</span>
-              <span class="airbnb-wordmark">airbnb</span>
-            </div>
-          </div>
-          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <p class="review-quote">"Helpful host. Great apartment. First class all round. The property was well-equipped, the location in Carlton was perfect for exploring Melbourne, and the communication before arrival was excellent. Couldn't fault a thing."</p>
-          <div class="review-author">
-            <div class="review-avatar" style="background:linear-gradient(135deg,#B8973A,#8a6820);">SR</div>
-            <div class="review-author-info">
-              <h4>Sophie R.</h4>
-              <p>Carlton · Heritage Terrace</p>
-            </div>
-          </div>
-        </div>
-        <!-- Review 3 - Booking.com -->
-        <div class="review-card">
-          <div class="review-platform">
-            <span class="booking-wordmark" style="color:#003580;">Booking</span><span class="booking-wordmark" style="color:#E31837;">.com</span>
-          </div>
-          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <p class="review-quote">"The apartment was very relaxing and cosy. I felt right at home and loved the walk to the restaurants and bars along the Yarra. The yard was tranquil and peaceful. Property management was incredibly professional — instant replies to every message."</p>
-          <div class="review-author">
-            <div class="review-avatar" style="background:linear-gradient(135deg,#0f6b3c,#084828);">MK</div>
-            <div class="review-author-info">
-              <h4>Michael K.</h4>
-              <p>Docklands · Waterfront Studio</p>
-            </div>
-          </div>
-        </div>
-        <!-- Review 4 -->
-        <div class="review-card">
-          <div class="review-platform">
-            <div class="airbnb-logo-inline">
-              <span class="airbnb-icon">♦</span>
-              <span class="airbnb-wordmark">airbnb</span>
-            </div>
-          </div>
-          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <p class="review-quote">"I stayed here for a work trip and it was absolutely perfect. Clean, modern, quiet — and the location in Fitzroy put me walking distance from everything I needed. The host thought of every little detail. This is exactly what a managed property should feel like."</p>
-          <div class="review-author">
-            <div class="review-avatar" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">AT</div>
-            <div class="review-author-info">
-              <h4>Anna T.</h4>
-              <p>Fitzroy · Designer 2-Bed</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ROI STRIP -->
 <section id="roi">
@@ -1469,8 +1311,8 @@
               </svg>
             </div>
             <div class="contact-detail-text">
-              <strong>Melbourne CBD & Inner City</strong>
-              <p>Servicing Southbank, Docklands, Carlton, Fitzroy & surrounds</p>
+              <strong>Melbourne Suburbs</strong>
+              <p>Southbank, St Kilda, South Yarra, Fitzroy, Richmond &amp; surrounds</p>
             </div>
           </div>
           <div class="contact-detail">
@@ -2014,53 +1856,28 @@ function closeServiceModal() {
   document.body.style.overflow = '';
 }
 
-// ── SLIDER JS - clones logos for seamless infinite scroll ──
+// ── SLIDER JS - pixel-perfect, mobile safe ──
 (function() {
-  const LOGOS = [
-    { name: 'Hotels.com',    color: '#E31837', svg: `<rect x="1" y="2" width="20" height="24" rx="2" fill="#E31837"/><text x="11" y="18" font-family="Arial Black" font-weight="900" font-size="13" fill="white" text-anchor="middle">H</text><text x="27" y="19" font-family="Arial" font-weight="700" font-size="13" fill="#E31837">Hotels</text><text x="64" y="19" font-family="Arial" font-size="13" fill="#333">.com</text>` },
-    { name: 'Vrbo',          color: '#1B2B6B', svg: `<rect x="1" y="4" width="19" height="19" rx="2" fill="#1B2B6B"/><text x="10.5" y="17" font-family="Georgia" font-weight="700" font-size="11" fill="white" text-anchor="middle">V</text><text x="24" y="21" font-family="Georgia" font-style="italic" font-weight="700" font-size="19" fill="#1B2B6B">rbo</text>` },
-    { name: 'Wotif',         color: '#00A651', svg: `<text x="2" y="22" font-family="Arial" font-weight="700" font-size="19" fill="#333">wot</text><circle cx="62" cy="14" r="10" fill="#00A651"/><text x="62" y="19" font-family="Arial" font-weight="900" font-size="12" fill="white" text-anchor="middle">if</text>` },
-    { name: 'airbnb',        color: '#FF5A5F', svg: `<path d="M14 4C11.5 4 9 6.5 9 10c0 2.5 1.7 5 5 9 3.3-4 5-6.5 5-9 0-3.5-2.5-6-5-6zm0 7.5c-0.8 0-1.5-0.7-1.5-1.5s0.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm-6 1C6.3 12.5 5 14 5 15.5c0 2 1.2 3.5 2.5 5.5 1.3-2 2.5-3.5 2.5-5.5 0-1.5-1.3-3-3-3zm12 0c-1.7 0-3 1.5-3 3 0 2 1.2 3.5 2.5 5.5 1.3-2 2.5-3.5 2.5-5.5 0-1.5-1.3-3-3-3zm-6 7c-2 0-4 1.2-5 2.5 1.2 1.2 3 1.8 5 1.8s3.8-.6 5-1.8c-1-1.3-3-2.5-5-2.5z" fill="#FF5A5F"/><text x="32" y="21" font-family="Arial" font-weight="700" font-size="15" fill="#484848">airbnb</text>` },
-    { name: 'agoda',         color: '#E31837', svg: `<text x="4" y="18" font-family="Arial" font-weight="700" font-size="15" fill="#333">agoda</text><circle cx="9"  cy="26" r="3.5" fill="#E31837"/><circle cx="18" cy="26" r="3.5" fill="#FF8C00"/><circle cx="27" cy="26" r="3.5" fill="#00A651"/><circle cx="36" cy="26" r="3.5" fill="#1B2B6B"/>` },
-    { name: 'Booking.com',   color: '#003580', svg: `<text x="2" y="20" font-family="Arial" font-weight="700" font-size="14" fill="#003580">Booking</text><text x="65" y="20" font-family="Arial" font-weight="700" font-size="14" fill="#E31837">.com</text>` },
-    { name: 'Tripadvisor',   color: '#34E0A1', svg: `<circle cx="12" cy="15" r="10" fill="#34E0A1"/><circle cx="12" cy="15" r="5" fill="white"/><circle cx="12" cy="15" r="2.5" fill="#333"/><text x="26" y="19" font-family="Arial" font-weight="700" font-size="12" fill="#333">Tripadvisor</text>` },
-    { name: 'Expedia',       color: '#1B68DC', svg: `<circle cx="13" cy="15" r="11" fill="#1B68DC"/><path d="M7 15 L13 7 L19 15" fill="white" opacity=".9"/><path d="M7 17 L13 25 L19 17" fill="white" opacity=".55"/><text x="28" y="19" font-family="Arial" font-weight="700" font-size="14" fill="#1B68DC">Expedia</text>` },
-    { name: 'EZPZ Property', color: '#0D2C54', svg: `<rect x="1" y="4" width="21" height="21" rx="3" fill="#0D2C54"/><text x="11.5" y="19" font-family="Arial" font-weight="900" font-size="10" fill="#B8973A" text-anchor="middle">EZ</text><text x="27" y="19" font-family="Arial" font-weight="700" font-size="12" fill="#0D2C54">EZPZ Property</text>` },
-  ];
-
-  const track = document.getElementById('slider');
-  if (!track) return;
-
-  function buildSet() {
-    return LOGOS.map(l => {
-      const d = document.createElement('div');
-      d.className = 'partner-logo';
-      d.innerHTML = `<svg viewBox="0 0 110 32" fill="none" xmlns="http://www.w3.org/2000/svg">${l.svg}</svg>`;
-      return d;
-    });
+  function initSlider() {
+    const inner = document.getElementById('sliderInner');
+    if (!inner) return;
+    const halfW = inner.scrollWidth / 2;
+    if (halfW < 10) { setTimeout(initSlider, 100); return; }
+    // Inject precise keyframes
+    let styleEl = document.getElementById('kozy-slider-kf');
+    if (!styleEl) { styleEl = document.createElement('style'); styleEl.id = 'kozy-slider-kf'; document.head.appendChild(styleEl); }
+    styleEl.textContent = '@keyframes kozySlide { from { transform: translateX(0); } to { transform: translateX(-' + halfW + 'px); } }';
+    inner.style.setProperty('--slide-dist', '-' + halfW + 'px');
   }
-
-  // Two full sets for seamless loop
-  track.innerHTML = '';
-  [...buildSet(), ...buildSet()].forEach(el => track.appendChild(el));
-
-  // Measure one set width then set animation correctly
-  requestAnimationFrame(() => {
-    const totalW = track.scrollWidth / 2;
-    track.style.setProperty('--slide-width', totalW + 'px');
-    // Override animation to use exact pixel width
-    const styleId = 'slider-keyframe-dynamic';
-    let s = document.getElementById(styleId);
-    if (!s) { s = document.createElement('style'); s.id = styleId; document.head.appendChild(s); }
-    s.textContent = `@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-${totalW}px); } }`;
-  });
-
+  // Run after images might have loaded
+  if (document.readyState === 'complete') { initSlider(); }
+  else { window.addEventListener('load', initSlider); }
   window.addEventListener('resize', () => {
-    requestAnimationFrame(() => {
-      const totalW = track.scrollWidth / 2;
-      const s = document.getElementById('slider-keyframe-dynamic');
-      if (s) s.textContent = `@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-${totalW}px); } }`;
-    });
+    const inner = document.getElementById('sliderInner');
+    if (!inner) return;
+    const halfW = inner.scrollWidth / 2;
+    const s = document.getElementById('kozy-slider-kf');
+    if (s && halfW > 10) s.textContent = '@keyframes kozySlide { from { transform: translateX(0); } to { transform: translateX(-' + halfW + 'px); } }';
   });
 })();
 </script>
