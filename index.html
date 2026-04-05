@@ -379,40 +379,47 @@
     font-family: var(--font-display); font-size: 26px;
     color: var(--navy); font-weight: 600;
   }
+  /* ── PARTNERS SLIDER - mobile-first ── */
   .slider-track-wrap {
-    overflow: hidden; position: relative;
+    overflow: hidden; position: relative; padding: 8px 0;
   }
   .slider-track-wrap::before,
   .slider-track-wrap::after {
-    content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 120px;
+    content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 80px;
     pointer-events: none;
   }
   .slider-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--white), transparent); }
-  .slider-track-wrap::after { right: 0; background: linear-gradient(-90deg, var(--white), transparent); }
+  .slider-track-wrap::after  { right: 0; background: linear-gradient(270deg, var(--white), transparent); }
   .slider-track {
-    display: flex; gap: 0;
-    animation: slide 14s linear infinite;
+    display: flex; align-items: center;
+    width: max-content;
+    animation: slide 18s linear infinite;
+    will-change: transform;
   }
-  .slider-track:hover { animation-play-state: paused; }
   @keyframes slide {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
   }
   .partner-logo {
-    flex: 0 0 220px; height: 90px;
+    flex: 0 0 auto;
+    height: 72px; width: 160px;
+    margin: 0 10px;
     border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    margin: 0 12px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 6px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
     background: var(--white);
     transition: border-color 0.2s, box-shadow 0.2s;
   }
   .partner-logo:hover {
-    border-color: rgba(37,99,235,0.3);
-    box-shadow: 0 4px 16px rgba(13,44,84,0.07);
+    border-color: rgba(37,99,235,0.25);
+    box-shadow: 0 4px 14px rgba(13,44,84,0.07);
   }
-  .partner-logo svg { max-width: 130px; height: 36px; }
+  .partner-logo svg { max-width: 120px; height: 32px; display: block; }
+  @media (max-width: 600px) {
+    .partner-logo { width: 130px; height: 60px; margin: 0 7px; }
+    .partner-logo svg { max-width: 100px; height: 26px; }
+    .slider-track { animation-duration: 18s; }
+  }
 
   #reviews {
     background: var(--white); padding: 100px 0; overflow: hidden;
@@ -885,6 +892,96 @@
   @media (max-width: 600px) {
     .nav-hamburger { display: flex; }
   }
+
+  /* ── GLASSMORPHISM SERVICE POPUP ── */
+  .glass-overlay {
+    display: none; position: fixed; inset: 0; z-index: 600;
+    background: rgba(6,16,35,0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .glass-overlay.open { display: flex; }
+  .glass-modal {
+    position: relative;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 20px;
+    width: 100%; max-width: 720px;
+    max-height: 88vh; overflow-y: auto;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+    color: white;
+  }
+  .glass-modal::-webkit-scrollbar { width: 4px; }
+  .glass-modal::-webkit-scrollbar-track { background: transparent; }
+  .glass-modal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+  .glass-hero {
+    position: relative; height: 220px; overflow: hidden;
+    border-radius: 18px 18px 0 0;
+  }
+  .glass-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .glass-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(13,44,84,0.2) 0%, rgba(13,44,84,0.75) 100%);
+    display: flex; align-items: flex-end; padding: 24px 28px;
+  }
+  .glass-hero-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gold);
+    background: rgba(184,151,58,0.15); border: 1px solid rgba(184,151,58,0.35);
+    padding: 5px 12px; border-radius: 3px; display: inline-block; margin-bottom: 8px;
+  }
+  .glass-hero h2 {
+    font-family: var(--font-display); font-size: 1.7rem;
+    font-weight: 600; color: white; line-height: 1.2; margin: 0;
+  }
+  .glass-body { padding: 28px 32px 36px; }
+  .glass-body p {
+    font-size: 15px; color: rgba(255,255,255,0.75);
+    line-height: 1.75; margin-bottom: 20px;
+  }
+  .glass-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0;
+  }
+  .glass-feature {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 14px 14px;
+  }
+  .glass-feature-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0; margin-top: 5px;
+  }
+  .glass-feature p { font-size: 13px; color: rgba(255,255,255,0.8); margin: 0; line-height: 1.5; }
+  .glass-feature strong { color: white; display: block; font-size: 13px; margin-bottom: 2px; }
+  .glass-cta {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    font-family: var(--font-body); font-size: 14px; font-weight: 700;
+    padding: 13px 28px; border-radius: 6px; text-decoration: none;
+    margin-top: 8px; transition: background 0.2s;
+    border: none; cursor: pointer;
+  }
+  .glass-cta:hover { background: #d4aa48; }
+  .glass-close {
+    position: absolute; top: 16px; right: 16px; z-index: 10;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2);
+    color: white; font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .glass-close:hover { background: rgba(0,0,0,0.65); }
+  @media (max-width: 600px) {
+    .glass-modal { max-height: 92vh; border-radius: 16px; }
+    .glass-hero { height: 160px; border-radius: 14px 14px 0 0; }
+    .glass-body { padding: 20px 18px 28px; }
+    .glass-features { grid-template-columns: 1fr; }
+    .glass-hero h2 { font-size: 1.3rem; }
+  }
+
 </style>
 </head>
 <body>
@@ -1024,7 +1121,7 @@
       <p class="section-desc">From listing creation to guest checkout, we handle everything — so you collect the revenue without the headaches.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card">
+      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
@@ -1033,7 +1130,7 @@
         <h3>Listing & Setup</h3>
         <p>Professional photography, compelling copy, and multi-platform listing across Airbnb, Booking.com, and Stayz to maximise visibility from day one.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
@@ -1042,7 +1139,7 @@
         <h3>Dynamic Pricing</h3>
         <p>Smart revenue management using real-time Melbourne market data — events, seasons, demand — to ensure your property earns at its full potential every night.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
@@ -1051,7 +1148,7 @@
         <h3>Guest Management</h3>
         <p>Seamless communication, instant bookings, and 24/7 guest support. We screen guests carefully and handle everything from check-in to checkout.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
@@ -1060,7 +1157,7 @@
         <h3>Reporting & Analytics</h3>
         <p>Monthly owner reports with clear income statements, occupancy trends, and performance benchmarks so you always know exactly how your asset is performing.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
@@ -1069,7 +1166,7 @@
         <h3>Housekeeping & Maintenance</h3>
         <p>Hotel-standard turnovers after every stay, plus a vetted local trades network for responsive repairs. Your property is always presented at its best.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" style="cursor:pointer;" onclick="openServiceModal(this)">
         <div class="service-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -1090,149 +1187,7 @@
   </div>
   <div class="slider-track-wrap">
     <div class="slider-track" id="slider">
-      <!-- Set A -->
-      <!-- Hotels.com -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="4" width="26" height="28" rx="3" fill="#E31837"/>
-          <text x="15" y="22" font-family="Arial Black,Arial" font-weight="900" font-size="14" fill="white" text-anchor="middle">H</text>
-          <text x="36" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#E31837">Hotels</text>
-          <text x="83" y="24" font-family="Arial,sans-serif" font-weight="400" font-size="15" fill="#333">.com</text>
-        </svg>
-      </div>
-      <!-- Vrbo -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="6" width="22" height="22" rx="3" fill="#1B2B6B"/>
-          <text x="13" y="22" font-family="Georgia,serif" font-weight="700" font-size="13" fill="white" text-anchor="middle">V</text>
-          <text x="30" y="25" font-family="Georgia,serif" font-style="italic" font-weight="700" font-size="22" fill="#1B2B6B">rbo</text>
-        </svg>
-      </div>
-      <!-- Wotif -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="4" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#333">wot</text>
-          <circle cx="71" cy="18" r="11" fill="#00A651"/>
-          <text x="71" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle">if</text>
-        </svg>
-      </div>
-      <!-- Airbnb -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 110 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 6C15 6 12 9 12 13C12 16 14 19 18 24C22 19 24 16 24 13C24 9 21 6 18 6ZM18 15C16.9 15 16 14.1 16 13C16 11.9 16.9 11 18 11C19.1 11 20 11.9 20 13C20 14.1 19.1 15 18 15ZM9 15C7 15 6 17 6 18.5C6 21 7.5 23 9 25.5C10.5 23 12 21 12 18.5C12 17 11 15 9 15ZM27 15C25 15 24 17 24 18.5C24 21 25.5 23 27 25.5C28.5 23 30 21 30 18.5C30 17 29 15 27 15ZM18 26C15.5 26 13 27.5 12 29C13.5 30.5 15.5 31 18 31C20.5 31 22.5 30.5 24 29C23 27.5 20.5 26 18 26Z" fill="#FF5A5F"/>
-          <text x="38" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#484848">airbnb</text>
-        </svg>
-      </div>
-      <!-- Agoda -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="6" y="22" font-family="Arial,sans-serif" font-weight="700" font-size="18" fill="#333">agoda</text>
-          <circle cx="12" cy="29" r="4" fill="#E31837"/>
-          <circle cx="22" cy="29" r="4" fill="#FF8C00"/>
-          <circle cx="32" cy="29" r="4" fill="#00A651"/>
-          <circle cx="42" cy="29" r="4" fill="#1B2B6B"/>
-        </svg>
-      </div>
-      <!-- Booking.com -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 140 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="4" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#003580">Booking</text>
-          <text x="80" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#E31837">.com</text>
-        </svg>
-      </div>
-      <!-- Tripadvisor -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 150 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="18" r="10" fill="#34E0A1"/>
-          <circle cx="12" cy="18" r="5" fill="white"/>
-          <circle cx="12" cy="18" r="2.5" fill="#333"/>
-          <text x="26" y="23" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#333">Tripadvisor</text>
-        </svg>
-      </div>
-      <!-- Expedia -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="18" r="12" fill="#1B68DC"/>
-          <path d="M10 18 L16 10 L22 18" fill="white" opacity="0.9"/>
-          <path d="M10 20 L16 28 L22 20" fill="white" opacity="0.6"/>
-          <text x="32" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="16" fill="#1B68DC">Expedia</text>
-        </svg>
-      </div>
-      <!-- EZPZ -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="6" width="24" height="24" rx="4" fill="#0D2C54"/>
-          <text x="14" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="#B8973A" text-anchor="middle">EZ</text>
-          <text x="32" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#0D2C54">EZPZ Property</text>
-        </svg>
-      </div>
-      <!-- Set B (duplicate for seamless loop) -->
-      <div class="partner-logo">
-        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="4" width="26" height="28" rx="3" fill="#E31837"/>
-          <text x="15" y="22" font-family="Arial Black,Arial" font-weight="900" font-size="14" fill="white" text-anchor="middle">H</text>
-          <text x="36" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#E31837">Hotels</text>
-          <text x="83" y="24" font-family="Arial,sans-serif" font-weight="400" font-size="15" fill="#333">.com</text>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="6" width="22" height="22" rx="3" fill="#1B2B6B"/>
-          <text x="13" y="22" font-family="Georgia,serif" font-weight="700" font-size="13" fill="white" text-anchor="middle">V</text>
-          <text x="30" y="25" font-family="Georgia,serif" font-style="italic" font-weight="700" font-size="22" fill="#1B2B6B">rbo</text>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="4" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#333">wot</text>
-          <circle cx="71" cy="18" r="11" fill="#00A651"/>
-          <text x="71" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle">if</text>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 110 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 6C15 6 12 9 12 13C12 16 14 19 18 24C22 19 24 16 24 13C24 9 21 6 18 6ZM18 15C16.9 15 16 14.1 16 13C16 11.9 16.9 11 18 11C19.1 11 20 11.9 20 13C20 14.1 19.1 15 18 15ZM9 15C7 15 6 17 6 18.5C6 21 7.5 23 9 25.5C10.5 23 12 21 12 18.5C12 17 11 15 9 15ZM27 15C25 15 24 17 24 18.5C24 21 25.5 23 27 25.5C28.5 23 30 21 30 18.5C30 17 29 15 27 15ZM18 26C15.5 26 13 27.5 12 29C13.5 30.5 15.5 31 18 31C20.5 31 22.5 30.5 24 29C23 27.5 20.5 26 18 26Z" fill="#FF5A5F"/>
-          <text x="38" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#484848">airbnb</text>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="6" y="22" font-family="Arial,sans-serif" font-weight="700" font-size="18" fill="#333">agoda</text>
-          <circle cx="12" cy="29" r="4" fill="#E31837"/>
-          <circle cx="22" cy="29" r="4" fill="#FF8C00"/>
-          <circle cx="32" cy="29" r="4" fill="#00A651"/>
-          <circle cx="42" cy="29" r="4" fill="#1B2B6B"/>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 140 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="4" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#003580">Booking</text>
-          <text x="80" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#E31837">.com</text>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 150 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="18" r="10" fill="#34E0A1"/>
-          <circle cx="12" cy="18" r="5" fill="white"/>
-          <circle cx="12" cy="18" r="2.5" fill="#333"/>
-          <text x="26" y="23" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#333">Tripadvisor</text>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="18" r="12" fill="#1B68DC"/>
-          <path d="M10 18 L16 10 L22 18" fill="white" opacity="0.9"/>
-          <path d="M10 20 L16 28 L22 20" fill="white" opacity="0.6"/>
-          <text x="32" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="16" fill="#1B68DC">Expedia</text>
-        </svg>
-      </div>
-      <div class="partner-logo">
-        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="6" width="24" height="24" rx="4" fill="#0D2C54"/>
-          <text x="14" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="#B8973A" text-anchor="middle">EZ</text>
-          <text x="32" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#0D2C54">EZPZ Property</text>
-        </svg>
-      </div>
+      <!-- logos injected by JS -->
     </div>
   </div>
 </section>
@@ -1606,10 +1561,10 @@
     <div class="footer-col">
       <h4>Services</h4>
       <ul>
-        <li><a href="#">Property Listing</a></li>
-        <li><a href="#">Guest Management</a></li>
-        <li><a href="#">Revenue Optimisation</a></li>
-        <li><a href="#">Housekeeping</a></li>
+        <li><a href="#" onclick="event.preventDefault();openServiceModalByName('Listing & Setup')">Property Listing</a></li>
+        <li><a href="#" onclick="event.preventDefault();openServiceModalByName('Guest Management')">Guest Management</a></li>
+        <li><a href="#" onclick="event.preventDefault();openServiceModalByName('Dynamic Pricing')">Revenue Optimisation</a></li>
+        <li><a href="#" onclick="event.preventDefault();openServiceModalByName('Housekeeping & Maintenance')">Housekeeping</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1920,5 +1875,195 @@
     if (e.target === this) closeModal();
   });
 </script>
+
+<!-- GLASSMORPHISM SERVICE MODAL -->
+<div class="glass-overlay" id="serviceModal" onclick="if(event.target===this)closeServiceModal()">
+  <div class="glass-modal" id="serviceModalBox">
+    <button class="glass-close" onclick="closeServiceModal()">✕</button>
+    <div class="glass-hero">
+      <img id="svcImg" src="" alt="">
+      <div class="glass-hero-overlay">
+        <div>
+          <span class="glass-hero-tag" id="svcTag">Service</span>
+          <h2 id="svcTitle"></h2>
+        </div>
+      </div>
+    </div>
+    <div class="glass-body">
+      <p id="svcDesc"></p>
+      <div class="glass-features" id="svcFeatures"></div>
+      <button class="glass-cta" onclick="closeServiceModal(); document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a Free Consultation →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SERVICES = {
+  "Listing & Setup": {
+    tag: "Platform Presence",
+    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80&fit=crop",
+    desc: "We create and optimise your property listing from scratch — professional photography, compelling copywriting, and multi-platform distribution across Airbnb, Booking.com, Stayz, VRBO, and Expedia. Your property launches looking its absolute best, positioned to attract the right guests at the right price from day one.",
+    features: [
+      ["Professional Photography", "High-quality images that stop the scroll and convert browsers to bookers."],
+      ["Compelling Copywriting", "Titles and descriptions crafted to rank well and resonate with ideal guests."],
+      ["Multi-Platform Listing", "Simultaneously listed on Airbnb, Booking.com, Stayz, VRBO & Expedia."],
+      ["Profile Optimisation", "Ongoing tweaks to algorithms, amenities, and keywords to maintain visibility."],
+      ["Onboarding in 14 Days", "From sign-up to first live booking in as little as two weeks."],
+      ["Setup Consultation", "A walk-through of your property to ensure it's guest-ready from the start."],
+    ]
+  },
+  "Dynamic Pricing": {
+    tag: "Revenue Management",
+    img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80&fit=crop",
+    desc: "We use real-time Melbourne market data — events, school holidays, seasonal demand, competitor rates — to adjust your nightly price automatically. No leaving money on the table during peak periods. No vacancy during quiet seasons. Just consistent, optimised revenue.",
+    features: [
+      ["Real-Time Rate Adjustment", "Prices updated daily based on live Melbourne demand signals."],
+      ["Event & Season Mapping", "Grand Prix, AFL finals, festivals — we price up before your competitors do."],
+      ["Minimum Rate Protection", "Floor prices set to protect your income during slower periods."],
+      ["Competitor Benchmarking", "Your rates always calibrated against comparable properties nearby."],
+      ["Occupancy vs Rate Balance", "We optimise for revenue — not just occupancy or rate in isolation."],
+      ["Monthly Revenue Reports", "Clear breakdowns of earnings, occupancy, and market comparison."],
+    ]
+  },
+  "Guest Management": {
+    tag: "Guest Experience",
+    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&fit=crop",
+    desc: "From the first enquiry to the final review, we manage every guest interaction with professionalism and warmth. Guests are screened carefully, check-in is seamless via smart lock, and our team is available 24/7 throughout their stay. Your guests feel looked after — and they'll say so in their review.",
+    features: [
+      ["24/7 Guest Support", "Real humans available around the clock for any guest query or issue."],
+      ["Guest Screening", "ID verification and booking history checks before every confirmation."],
+      ["Smart Lock Check-In", "Keyless, contactless self check-in with clear automated instructions."],
+      ["House Rules Enforcement", "We manage noise complaints, rule violations, and problem guests."],
+      ["Review Management", "We follow up with guests post-stay to encourage five-star reviews."],
+      ["Instant Booking Response", "All enquiries answered within minutes to maximise conversion."],
+    ]
+  },
+  "Reporting & Analytics": {
+    tag: "Owner Transparency",
+    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&fit=crop",
+    desc: "You always know exactly how your asset is performing. Every month you receive a clear owner statement covering income, expenses, occupancy rate, average nightly rate, and guest review scores — benchmarked against the Melbourne market. No surprises, full transparency.",
+    features: [
+      ["Monthly Owner Statements", "Clean income summaries with every booking, fee, and payout itemised."],
+      ["Occupancy Tracking", "See your occupancy rate vs Melbourne market averages month by month."],
+      ["Revenue Benchmarking", "How does your property compare to similar listings nearby?"],
+      ["Guest Review Scores", "Aggregated review scores across all platforms in one report."],
+      ["Owner Portal Access", "Log in any time to see live booking calendar and performance data."],
+      ["Annual Tax Summary", "Year-end statements formatted for your accountant."],
+    ]
+  },
+  "Housekeeping & Maintenance": {
+    tag: "Property Care",
+    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&fit=crop",
+    desc: "Every guest departure triggers a hotel-standard turnover — clean linen, restocked essentials, full inspection, and a photographic record. Our vetted local trades network handles maintenance fast, with owner approval for anything above a pre-agreed threshold. Your property is always presented perfectly.",
+    features: [
+      ["Hotel-Standard Cleaning", "Professional turnover after every single stay, every time."],
+      ["Linen & Towel Service", "Fresh hotel-quality linen for every new guest arrival."],
+      ["Essentials Restocking", "Toiletries, coffee, tea, and basics always topped up."],
+      ["Post-Stay Inspection", "Photo documentation of property condition after each guest."],
+      ["Rapid Maintenance Response", "Vetted local trades on call for urgent repairs."],
+      ["Preventative Upkeep", "Regular inspections to catch issues before guests do."],
+    ]
+  },
+  "Compliance & Insurance": {
+    tag: "Risk & Protection",
+    img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&fit=crop",
+    desc: "Short-term rentals in Victoria come with specific regulatory requirements — and they're evolving. We handle compliance on your behalf, ensure your listings meet all platform policies, and coordinate host protection coverage so your investment is properly protected at all times.",
+    features: [
+      ["Victorian STR Compliance", "We manage all regulatory requirements for short-stay rentals in VIC."],
+      ["Platform Policy Adherence", "Listings maintained within Airbnb and Booking.com policies at all times."],
+      ["Host Protection Coordination", "We liaise with Airbnb's AirCover and supplementary insurers."],
+      ["Body Corporate Liaison", "We navigate strata and owners corporation rules on your behalf."],
+      ["Guest Damage Process", "Clear process for documenting and claiming guest damage."],
+      ["Regulatory Updates", "We monitor changes to Melbourne STR laws and keep you informed."],
+    ]
+  },
+};
+
+function openServiceModal(card) {
+  const title = card.querySelector('h3').textContent.trim();
+  const svc = SERVICES[title];
+  if (!svc) return;
+  document.getElementById('svcTitle').textContent = title;
+  document.getElementById('svcTag').textContent = svc.tag;
+  document.getElementById('svcImg').src = svc.img;
+  document.getElementById('svcDesc').textContent = svc.desc;
+  const featEl = document.getElementById('svcFeatures');
+  featEl.innerHTML = svc.features.map(([t,d]) =>
+    `<div class="glass-feature"><div class="glass-feature-dot"></div><p><strong>${t}</strong>${d}</p></div>`
+  ).join('');
+  document.getElementById('serviceModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openServiceModalByName(name) {
+  const svc = SERVICES[name];
+  if (!svc) return;
+  document.getElementById('svcTitle').textContent = name;
+  document.getElementById('svcTag').textContent = svc.tag;
+  document.getElementById('svcImg').src = svc.img;
+  document.getElementById('svcDesc').textContent = svc.desc;
+  const featEl = document.getElementById('svcFeatures');
+  featEl.innerHTML = svc.features.map(([t,d]) =>
+    `<div class="glass-feature"><div class="glass-feature-dot"></div><p><strong>${t}</strong>${d}</p></div>`
+  ).join('');
+  document.getElementById('serviceModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeServiceModal() {
+  document.getElementById('serviceModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── SLIDER JS - clones logos for seamless infinite scroll ──
+(function() {
+  const LOGOS = [
+    { name: 'Hotels.com',    color: '#E31837', svg: `<rect x="1" y="2" width="20" height="24" rx="2" fill="#E31837"/><text x="11" y="18" font-family="Arial Black" font-weight="900" font-size="13" fill="white" text-anchor="middle">H</text><text x="27" y="19" font-family="Arial" font-weight="700" font-size="13" fill="#E31837">Hotels</text><text x="64" y="19" font-family="Arial" font-size="13" fill="#333">.com</text>` },
+    { name: 'Vrbo',          color: '#1B2B6B', svg: `<rect x="1" y="4" width="19" height="19" rx="2" fill="#1B2B6B"/><text x="10.5" y="17" font-family="Georgia" font-weight="700" font-size="11" fill="white" text-anchor="middle">V</text><text x="24" y="21" font-family="Georgia" font-style="italic" font-weight="700" font-size="19" fill="#1B2B6B">rbo</text>` },
+    { name: 'Wotif',         color: '#00A651', svg: `<text x="2" y="22" font-family="Arial" font-weight="700" font-size="19" fill="#333">wot</text><circle cx="62" cy="14" r="10" fill="#00A651"/><text x="62" y="19" font-family="Arial" font-weight="900" font-size="12" fill="white" text-anchor="middle">if</text>` },
+    { name: 'airbnb',        color: '#FF5A5F', svg: `<path d="M14 4C11.5 4 9 6.5 9 10c0 2.5 1.7 5 5 9 3.3-4 5-6.5 5-9 0-3.5-2.5-6-5-6zm0 7.5c-0.8 0-1.5-0.7-1.5-1.5s0.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm-6 1C6.3 12.5 5 14 5 15.5c0 2 1.2 3.5 2.5 5.5 1.3-2 2.5-3.5 2.5-5.5 0-1.5-1.3-3-3-3zm12 0c-1.7 0-3 1.5-3 3 0 2 1.2 3.5 2.5 5.5 1.3-2 2.5-3.5 2.5-5.5 0-1.5-1.3-3-3-3zm-6 7c-2 0-4 1.2-5 2.5 1.2 1.2 3 1.8 5 1.8s3.8-.6 5-1.8c-1-1.3-3-2.5-5-2.5z" fill="#FF5A5F"/><text x="32" y="21" font-family="Arial" font-weight="700" font-size="15" fill="#484848">airbnb</text>` },
+    { name: 'agoda',         color: '#E31837', svg: `<text x="4" y="18" font-family="Arial" font-weight="700" font-size="15" fill="#333">agoda</text><circle cx="9"  cy="26" r="3.5" fill="#E31837"/><circle cx="18" cy="26" r="3.5" fill="#FF8C00"/><circle cx="27" cy="26" r="3.5" fill="#00A651"/><circle cx="36" cy="26" r="3.5" fill="#1B2B6B"/>` },
+    { name: 'Booking.com',   color: '#003580', svg: `<text x="2" y="20" font-family="Arial" font-weight="700" font-size="14" fill="#003580">Booking</text><text x="65" y="20" font-family="Arial" font-weight="700" font-size="14" fill="#E31837">.com</text>` },
+    { name: 'Tripadvisor',   color: '#34E0A1', svg: `<circle cx="12" cy="15" r="10" fill="#34E0A1"/><circle cx="12" cy="15" r="5" fill="white"/><circle cx="12" cy="15" r="2.5" fill="#333"/><text x="26" y="19" font-family="Arial" font-weight="700" font-size="12" fill="#333">Tripadvisor</text>` },
+    { name: 'Expedia',       color: '#1B68DC', svg: `<circle cx="13" cy="15" r="11" fill="#1B68DC"/><path d="M7 15 L13 7 L19 15" fill="white" opacity=".9"/><path d="M7 17 L13 25 L19 17" fill="white" opacity=".55"/><text x="28" y="19" font-family="Arial" font-weight="700" font-size="14" fill="#1B68DC">Expedia</text>` },
+    { name: 'EZPZ Property', color: '#0D2C54', svg: `<rect x="1" y="4" width="21" height="21" rx="3" fill="#0D2C54"/><text x="11.5" y="19" font-family="Arial" font-weight="900" font-size="10" fill="#B8973A" text-anchor="middle">EZ</text><text x="27" y="19" font-family="Arial" font-weight="700" font-size="12" fill="#0D2C54">EZPZ Property</text>` },
+  ];
+
+  const track = document.getElementById('slider');
+  if (!track) return;
+
+  function buildSet() {
+    return LOGOS.map(l => {
+      const d = document.createElement('div');
+      d.className = 'partner-logo';
+      d.innerHTML = `<svg viewBox="0 0 110 32" fill="none" xmlns="http://www.w3.org/2000/svg">${l.svg}</svg>`;
+      return d;
+    });
+  }
+
+  // Two full sets for seamless loop
+  track.innerHTML = '';
+  [...buildSet(), ...buildSet()].forEach(el => track.appendChild(el));
+
+  // Measure one set width then set animation correctly
+  requestAnimationFrame(() => {
+    const totalW = track.scrollWidth / 2;
+    track.style.setProperty('--slide-width', totalW + 'px');
+    // Override animation to use exact pixel width
+    const styleId = 'slider-keyframe-dynamic';
+    let s = document.getElementById(styleId);
+    if (!s) { s = document.createElement('style'); s.id = styleId; document.head.appendChild(s); }
+    s.textContent = `@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-${totalW}px); } }`;
+  });
+
+  window.addEventListener('resize', () => {
+    requestAnimationFrame(() => {
+      const totalW = track.scrollWidth / 2;
+      const s = document.getElementById('slider-keyframe-dynamic');
+      if (s) s.textContent = `@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-${totalW}px); } }`;
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
