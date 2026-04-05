@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Trusted Host — Melbourne Short Stay Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0D2C54;
+    --navy-mid: #1A4880;
+    --blue: #2563EB;
+    --blue-light: #EEF4FF;
+    --gold: #B8973A;
+    --gold-light: #F5EDD6;
+    --white: #FFFFFF;
+    --off-white: #F8F7F4;
+    --gray-100: #F1F0ED;
+    --gray-200: #E2E0DB;
+    --gray-500: #8C8880;
+    --gray-700: #4A4844;
+    --text: #1A1816;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --max: 1160px;
+    --radius: 4px;
+    --radius-lg: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--white);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,44,84,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 70px;
+  }
+  .logo-mark {
+    display: flex; align-items: center; gap: 12px; text-decoration: none;
+  }
+  .logo-icon {
+    width: 42px; height: 42px; position: relative; flex-shrink: 0;
+  }
+  .logo-text-block { display: flex; flex-direction: column; line-height: 1.1; }
+  .logo-name {
+    font-family: var(--font-display);
+    font-size: 17px; font-weight: 600;
+    color: var(--white); letter-spacing: 0.02em;
+  }
+  .logo-sub {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.18em;
+    color: var(--gold); text-transform: uppercase;
+  }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul li a {
+    color: rgba(255,255,255,0.78); text-decoration: none;
+    font-size: 14px; font-weight: 400; letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  nav ul li a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--gold); color: var(--navy) !important;
+    padding: 9px 22px; border-radius: var(--radius);
+    font-weight: 600 !important; font-size: 13px !important;
+    letter-spacing: 0.04em !important; transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: #D4AA48 !important; }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    background: #0a1e38;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center;
+  }
+  .hero-bg-photo {
+    position: absolute; inset: 0; z-index: 0;
+    background: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=60&fit=crop') center/cover no-repeat;
+    opacity: 0.12;
+  }
+  #hero-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.03;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 80px, rgba(255,255,255,0.6) 80px, rgba(255,255,255,0.6) 81px
+    ), repeating-linear-gradient(
+      90deg, transparent, transparent 80px, rgba(255,255,255,0.6) 80px, rgba(255,255,255,0.6) 81px
+    );
+  }
+  .hero-orb {
+    position: absolute; border-radius: 50%; pointer-events: none;
+  }
+  .hero-orb-1 {
+    width: 600px; height: 600px; right: -100px; top: -100px;
+    background: radial-gradient(circle, rgba(37,99,235,0.22) 0%, transparent 65%);
+    animation: orbFloat1 12s ease-in-out infinite;
+  }
+  .hero-orb-2 {
+    width: 400px; height: 400px; left: -80px; bottom: -80px;
+    background: radial-gradient(circle, rgba(184,151,58,0.12) 0%, transparent 65%);
+    animation: orbFloat2 15s ease-in-out infinite;
+  }
+  @keyframes orbFloat1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 30px) scale(1.08); }
+  }
+  @keyframes orbFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.06); }
+  }
+  .hero-accent { display: none; }
+
+  /* Animated text cycling */
+  .hero-tagline-wrap { overflow: hidden; height: 1.2em; display: block; }
+  .hero-tagline-cycle {
+    display: block;
+    animation: taglineCycle 9s ease-in-out infinite;
+  }
+  @keyframes taglineCycle {
+    0%   { opacity: 0; transform: translateY(20px); }
+    8%   { opacity: 1; transform: translateY(0); }
+    30%  { opacity: 1; transform: translateY(0); }
+    38%  { opacity: 0; transform: translateY(-20px); }
+    39%  { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 0; transform: translateY(20px); }
+  }
+  .hero-tagline-cycle-2 {
+    display: block;
+    animation: taglineCycle2 9s ease-in-out infinite;
+    position: absolute; top: 0; left: 0; right: 0;
+  }
+  @keyframes taglineCycle2 {
+    0%   { opacity: 0; transform: translateY(20px); }
+    38%  { opacity: 0; transform: translateY(20px); }
+    46%  { opacity: 1; transform: translateY(0); }
+    68%  { opacity: 1; transform: translateY(0); }
+    76%  { opacity: 0; transform: translateY(-20px); }
+    77%  { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 0; transform: translateY(20px); }
+  }
+  .hero-tagline-cycle-3 {
+    display: block;
+    animation: taglineCycle3 9s ease-in-out infinite;
+    position: absolute; top: 0; left: 0; right: 0;
+  }
+  @keyframes taglineCycle3 {
+    0%   { opacity: 0; transform: translateY(20px); }
+    76%  { opacity: 0; transform: translateY(20px); }
+    84%  { opacity: 1; transform: translateY(0); }
+    95%  { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+  }
+  /* hero fade-in on load */
+  .hero-badge { animation: fadeUp 0.7s 0.1s both ease-out; }
+  .hero h1    { animation: fadeUp 0.7s 0.3s both ease-out; }
+  .hero-desc  { animation: fadeUp 0.7s 0.5s both ease-out; }
+  .hero-actions { animation: fadeUp 0.7s 0.65s both ease-out; }
+  .hero-stats { animation: fadeUp 0.7s 0.8s both ease-out; }
+  .hero-card-side { animation: fadeUp 0.8s 0.5s both ease-out; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-inner {
+    max-width: var(--max); margin: 0 auto; padding: 140px 2rem 100px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(184,151,58,0.15); border: 1px solid rgba(184,151,58,0.35);
+    color: var(--gold); font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 7px 16px; border-radius: 2px;
+    margin-bottom: 28px;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; background: var(--gold);
+    border-radius: 50%; flex-shrink: 0;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    font-weight: 600; color: var(--white);
+    line-height: 1.18; margin-bottom: 0;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--gold);
+    display: block;
+  }
+  .hero-em-wrap {
+    position: relative; display: block;
+    height: clamp(3.5rem, 5.5vw, 4.8rem);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .hero-desc {
+    color: rgba(255,255,255,0.68); font-size: 16px;
+    line-height: 1.8; margin-bottom: 36px; max-width: 460px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    padding: 15px 32px; border-radius: var(--radius);
+    border: none; cursor: pointer; text-decoration: none;
+    letter-spacing: 0.03em; transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #D4AA48; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    font-family: var(--font-body); font-size: 15px; font-weight: 400;
+    padding: 14px 30px; border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
+    text-decoration: none; letter-spacing: 0.03em;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.07); }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 52px;
+    padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: var(--font-display); font-size: 2rem;
+    font-weight: 600; color: var(--white); line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px;
+  }
+  .hero-card-side {
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .property-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .property-card-img {
+    height: 200px;
+    background: linear-gradient(135deg, #1e4a7a, #2563EB);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .house-svg { opacity: 0.35; }
+  .prop-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--gold); color: var(--navy);
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    padding: 5px 12px; border-radius: 2px; text-transform: uppercase;
+  }
+  .property-card-body { padding: 20px 22px; }
+  .prop-location {
+    font-size: 12px; color: rgba(255,255,255,0.45);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .prop-title {
+    font-family: var(--font-display); font-size: 18px;
+    color: var(--white); margin-bottom: 14px;
+  }
+  .prop-metrics { display: flex; gap: 20px; }
+  .prop-metric { text-align: center; }
+  .prop-metric-val {
+    font-size: 18px; font-weight: 600; color: var(--gold);
+    font-family: var(--font-display);
+  }
+  .prop-metric-label {
+    font-size: 11px; color: rgba(255,255,255,0.4);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .trust-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .trust-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; padding: 8px 16px;
+    font-size: 13px; color: rgba(255,255,255,0.75);
+  }
+  .trust-pill .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 2rem; }
+  .container { max-width: var(--max); margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 14px; display: block;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    font-weight: 600; color: var(--navy);
+    line-height: 1.2; margin-bottom: 18px;
+  }
+  .section-desc {
+    color: var(--gray-500); font-size: 17px; line-height: 1.75;
+    max-width: 560px;
+  }
+  .section-header { margin-bottom: 60px; }
+  .section-header.center { text-align: center; }
+  .section-header.center .section-desc { margin: 0 auto; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--off-white); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .service-card:hover {
+    border-color: rgba(37,99,235,0.35);
+    box-shadow: 0 8px 32px rgba(13,44,84,0.08);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--navy), var(--blue));
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 52px; height: 52px;
+    background: var(--blue-light);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+  }
+  .service-icon svg { width: 24px; height: 24px; color: var(--blue); }
+  .service-card h3 {
+    font-family: var(--font-display); font-size: 20px;
+    color: var(--navy); margin-bottom: 12px; font-weight: 600;
+  }
+  .service-card p { color: var(--gray-500); font-size: 15px; line-height: 1.7; }
+
+  /* ── PARTNERS SLIDER ── */
+  #partners { background: var(--white); padding: 70px 0; }
+  .partners-header { text-align: center; margin-bottom: 50px; padding: 0 2rem; }
+  .partners-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gray-500); margin-bottom: 12px;
+    display: block;
+  }
+  .partners-title {
+    font-family: var(--font-display); font-size: 26px;
+    color: var(--navy); font-weight: 600;
+  }
+  .slider-track-wrap {
+    overflow: hidden; position: relative;
+  }
+  .slider-track-wrap::before,
+  .slider-track-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; z-index: 2; width: 120px;
+    pointer-events: none;
+  }
+  .slider-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--white), transparent); }
+  .slider-track-wrap::after { right: 0; background: linear-gradient(-90deg, var(--white), transparent); }
+  .slider-track {
+    display: flex; gap: 0;
+    animation: slide 28s linear infinite;
+  }
+  .slider-track:hover { animation-play-state: paused; }
+  @keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .partner-logo {
+    flex: 0 0 220px; height: 90px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    margin: 0 12px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 6px;
+    background: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .partner-logo:hover {
+    border-color: rgba(37,99,235,0.3);
+    box-shadow: 0 4px 16px rgba(13,44,84,0.07);
+  }
+  .partner-logo svg { max-width: 130px; height: 36px; }
+
+  #reviews {
+    background: var(--white); padding: 100px 0; overflow: hidden;
+    position: relative;
+  }
+  #reviews::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 42%;
+    background: url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=60&fit=crop') center/cover no-repeat;
+    opacity: 0.12;
+  }
+  .reviews-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+  .reviews-layout { display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: start; }
+  .reviews-intro-card {
+    background: rgba(255,255,255,0.92); border-radius: 16px;
+    padding: 36px 32px; border: 1px solid var(--gray-200);
+    position: sticky; top: 100px;
+  }
+  .reviews-intro-card h2 {
+    font-family: var(--font-display); font-size: 1.9rem;
+    font-weight: 700; color: var(--navy); margin-bottom: 14px; line-height: 1.2;
+  }
+  .reviews-intro-card p { font-size: 14px; color: var(--gray-500); line-height: 1.65; margin-bottom: 24px; }
+  .reviews-platform-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+  .platform-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--off-white); border: 1px solid var(--gray-200);
+    border-radius: 20px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--gray-700);
+  }
+  .reviews-stack { display: flex; flex-direction: column; gap: 20px; }
+  .review-card {
+    background: var(--white); border-radius: 14px;
+    border: 1px solid var(--gray-200); padding: 28px 28px 22px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .review-card:hover { box-shadow: 0 8px 32px rgba(13,44,84,0.09); transform: translateY(-2px); }
+  .review-platform { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .airbnb-logo-inline { display: flex; align-items: center; gap: 6px; }
+  .airbnb-icon { color: #FF5A5F; font-size: 20px; line-height: 1; }
+  .airbnb-wordmark { font-size: 15px; font-weight: 700; color: #484848; font-family: var(--font-body); }
+  .booking-wordmark { font-size: 14px; font-weight: 700; }
+  .review-stars { display: flex; gap: 2px; margin-bottom: 14px; }
+  .review-stars span { color: #2563EB; font-size: 16px; }
+  .review-quote { font-size: 14px; color: #444; line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+  .review-author { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--gray-200); padding-top: 16px; }
+  .review-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 14px; font-weight: 600;
+    color: white; flex-shrink: 0;
+  }
+  .review-author-info h4 { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .review-author-info p { font-size: 12px; color: var(--gray-500); }
+
+  /* ── REVIEWS ── */
+  #guests { background: var(--off-white); }
+  .guests-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .guests-img-block {
+    position: relative;
+  }
+  .guests-img-main {
+    background: linear-gradient(145deg, var(--navy), var(--navy-mid));
+    border-radius: var(--radius-lg); height: 400px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .guests-img-main svg { opacity: 0.18; width: 180px; }
+  .guests-img-overlay {
+    position: absolute; bottom: -24px; right: -24px;
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg); padding: 20px 24px;
+    box-shadow: 0 8px 32px rgba(13,44,84,0.1);
+  }
+  .overlay-rating { font-size: 28px; font-weight: 700; color: var(--navy); font-family: var(--font-display); }
+  .overlay-stars { color: var(--gold); font-size: 14px; margin-bottom: 4px; }
+  .overlay-label { font-size: 12px; color: var(--gray-500); }
+  .guests-content h2 { margin-bottom: 20px; }
+  .guests-features { margin-top: 36px; display: flex; flex-direction: column; gap: 20px; }
+  .guest-feat {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 22px; background: var(--white);
+    border: 1px solid var(--gray-200); border-radius: var(--radius-lg);
+    transition: border-color 0.2s;
+  }
+  .guest-feat:hover { border-color: rgba(37,99,235,0.3); }
+  .feat-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--blue-light); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feat-icon svg { width: 20px; height: 20px; color: var(--blue); }
+  .feat-body h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .feat-body p { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--navy); }
+  #about .section-title { color: var(--white); }
+  #about .section-label { color: var(--gold); }
+  #about .section-desc { color: rgba(255,255,255,0.6); max-width: 100%; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .about-values { margin-top: 44px; display: flex; flex-direction: column; gap: 24px; }
+  .about-value {
+    display: flex; gap: 18px; align-items: flex-start;
+  }
+  .value-num {
+    font-family: var(--font-display); font-size: 36px; font-weight: 600;
+    color: rgba(184,151,58,0.25); line-height: 1; flex-shrink: 0; width: 48px;
+  }
+  .value-text h4 { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .value-text p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65; }
+  .about-right {}
+  .heritage-crest {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg); padding: 36px;
+    text-align: center; margin-bottom: 32px;
+  }
+  .heritage-crest svg { width: 80px; height: 80px; opacity: 0.7; }
+  .heritage-crest p {
+    font-size: 15px; color: rgba(255,255,255,0.6);
+    font-style: italic; margin-top: 16px; line-height: 1.6;
+    font-family: var(--font-display);
+  }
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .team-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-lg); padding: 22px 20px;
+  }
+  .team-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy-mid), var(--blue));
+    border: 2px solid rgba(184,151,58,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 16px;
+    font-weight: 600; color: var(--white); margin-bottom: 14px;
+  }
+  .team-card h4 { font-size: 15px; font-weight: 600; color: var(--white); }
+  .team-card p { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+
+  /* ── ROI STRIP ── */
+  #roi {
+    background: var(--gold);
+    padding: 80px 2rem;
+  }
+  .roi-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .roi-content h2 {
+    font-family: var(--font-display); font-size: 2.2rem;
+    font-weight: 600; color: var(--navy); line-height: 1.2; margin-bottom: 16px;
+  }
+  .roi-content p { color: rgba(13,44,84,0.7); font-size: 16px; line-height: 1.75; margin-bottom: 28px; }
+  .roi-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .roi-metric {
+    background: rgba(13,44,84,0.08); border-radius: var(--radius-lg);
+    padding: 24px 22px;
+  }
+  .roi-val {
+    font-family: var(--font-display); font-size: 2rem;
+    font-weight: 600; color: var(--navy);
+  }
+  .roi-metric-label { font-size: 13px; color: rgba(13,44,84,0.65); margin-top: 4px; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--white); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  }
+  .contact-info h2 { margin-bottom: 18px; }
+  .contact-info p { color: var(--gray-500); font-size: 16px; line-height: 1.75; margin-bottom: 36px; }
+  .contact-details { display: flex; flex-direction: column; gap: 18px; margin-bottom: 36px; }
+  .contact-detail {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .contact-detail-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--blue-light); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-detail-icon svg { width: 18px; height: 18px; color: var(--blue); }
+  .contact-detail-text p { font-size: 14px; color: var(--gray-500); }
+  .contact-detail-text strong { font-size: 15px; color: var(--navy); font-weight: 600; }
+  .contact-form {
+    background: var(--off-white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg); padding: 40px;
+  }
+  .contact-form h3 {
+    font-family: var(--font-display); font-size: 22px;
+    color: var(--navy); margin-bottom: 28px; font-weight: 600;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--navy); margin-bottom: 7px; letter-spacing: 0.03em;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 12px 16px;
+    border: 1px solid var(--gray-200); border-radius: var(--radius);
+    font-family: var(--font-body); font-size: 15px; color: var(--text);
+    background: var(--white); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--blue); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    width: 100%; background: var(--navy);
+    color: var(--white); font-family: var(--font-body);
+    font-size: 15px; font-weight: 600; padding: 16px;
+    border: none; border-radius: var(--radius);
+    cursor: pointer; letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+  .form-submit:hover { background: var(--navy-mid); }
+
+  /* ── FLOATING GET STARTED ── */
+  .float-btn {
+    position: fixed; bottom: 36px; right: 36px; z-index: 200;
+    width: 88px; height: 88px; border-radius: 50%;
+    background: linear-gradient(135deg, #2563EB, #1a4880);
+    color: white; font-family: var(--font-body);
+    font-size: 12px; font-weight: 600; text-align: center;
+    border: 3px solid rgba(255,255,255,0.25);
+    cursor: pointer; box-shadow: 0 8px 30px rgba(37,99,235,0.45);
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1.3; letter-spacing: 0.03em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: floatPulse 3s ease-in-out infinite;
+  }
+  .float-btn:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(37,99,235,0.55); }
+  @keyframes floatPulse {
+    0%,100% { box-shadow: 0 8px 30px rgba(37,99,235,0.45); }
+    50% { box-shadow: 0 8px 40px rgba(37,99,235,0.65), 0 0 0 10px rgba(37,99,235,0.1); }
+  }
+
+  /* ── FORM MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(10,25,50,0.75); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--white); border-radius: 20px;
+    width: 90%; max-width: 680px; max-height: 90vh;
+    overflow-y: auto; position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+  }
+  .modal-header {
+    padding: 28px 36px 0; display: flex; align-items: flex-start; justify-content: space-between;
+  }
+  .modal-close {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--gray-100); border: none; cursor: pointer;
+    font-size: 18px; color: var(--gray-700);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--gray-200); }
+  .modal-body { padding: 20px 36px 36px; }
+  .step-indicator { display: flex; gap: 8px; margin-bottom: 28px; }
+  .step-dot {
+    height: 4px; flex: 1; border-radius: 2px;
+    background: var(--gray-200); transition: background 0.3s;
+  }
+  .step-dot.active { background: var(--blue); }
+  .step-dot.done { background: var(--navy); }
+  .step-panel { display: none; }
+  .step-panel.active { display: block; }
+  .step-q {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+  }
+  .step-title {
+    font-family: var(--font-display); font-size: 1.5rem;
+    font-weight: 600; color: var(--navy); margin-bottom: 24px; line-height: 1.3;
+  }
+  .choice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 28px; }
+  .choice-btn {
+    border: 1.5px solid var(--gray-200); border-radius: 12px;
+    padding: 20px 14px; text-align: center; cursor: pointer;
+    background: var(--white); transition: border-color 0.2s, background 0.2s;
+    font-family: var(--font-body);
+  }
+  .choice-btn:hover { border-color: var(--blue); background: var(--blue-light); }
+  .choice-btn.selected { border-color: var(--blue); background: var(--blue-light); }
+  .choice-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+  .choice-label { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .step-nav { display: flex; gap: 12px; margin-top: 24px; }
+  .step-next {
+    flex: 1; background: var(--navy); color: white;
+    border: none; border-radius: 8px; padding: 14px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .step-next:hover { background: var(--navy-mid); }
+  .step-back {
+    background: var(--gray-100); color: var(--gray-700);
+    border: none; border-radius: 8px; padding: 14px 20px;
+    font-family: var(--font-body); font-size: 15px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .step-back:hover { background: var(--gray-200); }
+  .form-row-modal { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group-modal { margin-bottom: 14px; }
+  .form-group-modal label { display: block; font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 6px; }
+  .form-group-modal input, .form-group-modal select {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--gray-200); border-radius: 8px;
+    font-family: var(--font-body); font-size: 14px; color: var(--text);
+    background: var(--white); outline: none; transition: border-color 0.2s;
+  }
+  .form-group-modal input:focus, .form-group-modal select:focus { border-color: var(--blue); }
+  .success-panel { text-align: center; padding: 20px 0 10px; }
+  .success-icon { font-size: 52px; margin-bottom: 16px; }
+  .success-panel h3 { font-family: var(--font-display); font-size: 1.6rem; color: var(--navy); margin-bottom: 10px; }
+  .success-panel p { color: var(--gray-500); font-size: 15px; line-height: 1.65; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060f1c;
+    padding: 60px 2rem 36px;
+    color: rgba(255,255,255,0.45);
+  }
+  .footer-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand {}
+  .footer-brand .logo-name { font-size: 20px; margin-bottom: 14px; display: block; }
+  .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 280px; }
+  .footer-col h4 {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.7);
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    font-size: 14px; color: rgba(255,255,255,0.45); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: rgba(255,255,255,0.8); }
+  .footer-bottom {
+    max-width: var(--max); margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 28px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px;
+  }
+  .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .hero-card-side { display: none; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .guests-grid, .about-grid, .contact-grid, .roi-inner { grid-template-columns: 1fr; gap: 48px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#home" class="logo-mark">
+      <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Shield with house -->
+        <path d="M21 2L4 10V22C4 31.4 11.5 40 21 42C30.5 40 38 31.4 38 22V10L21 2Z" fill="rgba(184,151,58,0.2)" stroke="#B8973A" stroke-width="1.5"/>
+        <!-- House icon inside shield -->
+        <path d="M21 13L13 20H15V30H19V24H23V30H27V20H29L21 13Z" fill="#B8973A"/>
+        <!-- Scottish thistle hint (small cross at top of shield) -->
+        <path d="M21 6V9M18.5 7.5H23.5" stroke="#B8973A" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+      <div class="logo-text-block">
+        <span class="logo-name">The Trusted Host</span>
+        <span class="logo-sub">Melbourne · Est. 2024</span>
+      </div>
+    </a>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#guests">Guests</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg-photo"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-pattern"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-inner">
+    <div class="hero">
+      <div class="hero-badge">Central Melbourne's Trusted Property Host</div>
+      <h1>Your property,<span class="hero-em-wrap">
+        <em class="hero-tagline-wrap"><span class="hero-tagline-cycle" style="color:var(--gold);">our hospitality.</span></em>
+        <em class="hero-tagline-cycle-2" style="color:var(--gold);">your peace of mind.</em>
+        <em class="hero-tagline-cycle-3" style="color:var(--gold);">maximum returns.</em>
+      </span></h1>
+      <p class="hero-desc">
+        We manage your short-stay property like it's our own — maximising your returns while delivering five-star guest experiences. No stress. Just results.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Book a Free Consultation</a>
+        <a href="#services" class="btn-outline">See How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">94%</div>
+          <div class="stat-label">Avg Occupancy</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">38%</div>
+          <div class="stat-label">More Than Long-Term</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5★</div>
+          <div class="stat-label">Guest Rating</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-card-side">
+      <div class="property-card">
+        <div class="property-card-img" style="background: #0f3055; position:relative; overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80&fit=crop" alt="Melbourne property" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
+          <div class="prop-badge">Live Property</div>
+        </div>
+        <div class="property-card-body">
+          <div class="prop-location">Southbank, Melbourne VIC</div>
+          <div class="prop-title">Yarra River View — 2 Bed Apartment</div>
+          <div class="prop-metrics">
+            <div class="prop-metric">
+              <div class="prop-metric-val">$4,620</div>
+              <div class="prop-metric-label">This Month</div>
+            </div>
+            <div class="prop-metric">
+              <div class="prop-metric-val">96%</div>
+              <div class="prop-metric-label">Occupancy</div>
+            </div>
+            <div class="prop-metric">
+              <div class="prop-metric-val">4.97</div>
+              <div class="prop-metric-label">★ Rating</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="trust-pills">
+        <div class="trust-pill"><span class="dot"></span>Fully Insured</div>
+        <div class="trust-pill"><span class="dot"></span>24/7 Guest Support</div>
+        <div class="trust-pill"><span class="dot"></span>Licensed Manager</div>
+        <div class="trust-pill"><span class="dot"></span>Dynamic Pricing</div>
+      </div>
+      <!-- Second mini property card -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;">
+        <div style="border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); position:relative;">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&q=75&fit=crop" alt="Carlton property" style="width:100%; height:90px; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(13,44,84,0.85)); padding:8px 10px;">
+            <div style="font-size:10px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.08em;">Carlton</div>
+            <div style="font-size:12px; font-weight:600; color:#fff;">4.96 ★ · 93% occ.</div>
+          </div>
+        </div>
+        <div style="border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); position:relative;">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=300&q=75&fit=crop" alt="Fitzroy property" style="width:100%; height:90px; object-fit:cover; display:block;">
+          <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(13,44,84,0.85)); padding:8px 10px;">
+            <div style="font-size:10px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.08em;">Fitzroy</div>
+            <div style="font-size:12px; font-weight:600; color:#fff;">4.98 ★ · 97% occ.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Full-service property management,<br>end to end.</h2>
+      <p class="section-desc">From listing creation to guest checkout, we handle everything — so you collect the revenue without the headaches.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+          </svg>
+        </div>
+        <h3>Listing & Setup</h3>
+        <p>Professional photography, compelling copy, and multi-platform listing across Airbnb, Booking.com, and Stayz to maximise visibility from day one.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
+        <h3>Dynamic Pricing</h3>
+        <p>Smart revenue management using real-time Melbourne market data — events, seasons, demand — to ensure your property earns at its full potential every night.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <h3>Guest Management</h3>
+        <p>Seamless communication, instant bookings, and 24/7 guest support. We screen guests carefully and handle everything from check-in to checkout.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3>Reporting & Analytics</h3>
+        <p>Monthly owner reports with clear income statements, occupancy trends, and performance benchmarks so you always know exactly how your asset is performing.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+          </svg>
+        </div>
+        <h3>Housekeeping & Maintenance</h3>
+        <p>Hotel-standard turnovers after every stay, plus a vetted local trades network for responsive repairs. Your property is always presented at its best.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>Compliance & Insurance</h3>
+        <p>We manage all regulatory requirements for short-term rentals in Victoria, and coordinate host protection so your investment is always properly covered.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTED PARTNERS SLIDER -->
+<section id="partners">
+  <div class="partners-header">
+    <span class="partners-label">Our Trusted Partners</span>
+    <h2 class="partners-title">Listed where guests search</h2>
+  </div>
+  <div class="slider-track-wrap">
+    <div class="slider-track" id="slider">
+      <!-- Set A -->
+      <!-- Hotels.com -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="4" width="26" height="28" rx="3" fill="#E31837"/>
+          <text x="15" y="22" font-family="Arial Black,Arial" font-weight="900" font-size="14" fill="white" text-anchor="middle">H</text>
+          <text x="36" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#E31837">Hotels</text>
+          <text x="83" y="24" font-family="Arial,sans-serif" font-weight="400" font-size="15" fill="#333">.com</text>
+        </svg>
+      </div>
+      <!-- Vrbo -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="6" width="22" height="22" rx="3" fill="#1B2B6B"/>
+          <text x="13" y="22" font-family="Georgia,serif" font-weight="700" font-size="13" fill="white" text-anchor="middle">V</text>
+          <text x="30" y="25" font-family="Georgia,serif" font-style="italic" font-weight="700" font-size="22" fill="#1B2B6B">rbo</text>
+        </svg>
+      </div>
+      <!-- Wotif -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#333">wot</text>
+          <circle cx="71" cy="18" r="11" fill="#00A651"/>
+          <text x="71" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle">if</text>
+        </svg>
+      </div>
+      <!-- Airbnb -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 110 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6C15 6 12 9 12 13C12 16 14 19 18 24C22 19 24 16 24 13C24 9 21 6 18 6ZM18 15C16.9 15 16 14.1 16 13C16 11.9 16.9 11 18 11C19.1 11 20 11.9 20 13C20 14.1 19.1 15 18 15ZM9 15C7 15 6 17 6 18.5C6 21 7.5 23 9 25.5C10.5 23 12 21 12 18.5C12 17 11 15 9 15ZM27 15C25 15 24 17 24 18.5C24 21 25.5 23 27 25.5C28.5 23 30 21 30 18.5C30 17 29 15 27 15ZM18 26C15.5 26 13 27.5 12 29C13.5 30.5 15.5 31 18 31C20.5 31 22.5 30.5 24 29C23 27.5 20.5 26 18 26Z" fill="#FF5A5F"/>
+          <text x="38" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#484848">airbnb</text>
+        </svg>
+      </div>
+      <!-- Agoda -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="6" y="22" font-family="Arial,sans-serif" font-weight="700" font-size="18" fill="#333">agoda</text>
+          <circle cx="12" cy="29" r="4" fill="#E31837"/>
+          <circle cx="22" cy="29" r="4" fill="#FF8C00"/>
+          <circle cx="32" cy="29" r="4" fill="#00A651"/>
+          <circle cx="42" cy="29" r="4" fill="#1B2B6B"/>
+        </svg>
+      </div>
+      <!-- Booking.com -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 140 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#003580">Booking</text>
+          <text x="80" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#E31837">.com</text>
+        </svg>
+      </div>
+      <!-- Tripadvisor -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 150 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="18" r="10" fill="#34E0A1"/>
+          <circle cx="12" cy="18" r="5" fill="white"/>
+          <circle cx="12" cy="18" r="2.5" fill="#333"/>
+          <text x="26" y="23" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#333">Tripadvisor</text>
+        </svg>
+      </div>
+      <!-- Expedia -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="18" r="12" fill="#1B68DC"/>
+          <path d="M10 18 L16 10 L22 18" fill="white" opacity="0.9"/>
+          <path d="M10 20 L16 28 L22 20" fill="white" opacity="0.6"/>
+          <text x="32" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="16" fill="#1B68DC">Expedia</text>
+        </svg>
+      </div>
+      <!-- EZPZ -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="6" width="24" height="24" rx="4" fill="#0D2C54"/>
+          <text x="14" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="#B8973A" text-anchor="middle">EZ</text>
+          <text x="32" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#0D2C54">EZPZ Property</text>
+        </svg>
+      </div>
+      <!-- Set B (duplicate for seamless loop) -->
+      <div class="partner-logo">
+        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="4" width="26" height="28" rx="3" fill="#E31837"/>
+          <text x="15" y="22" font-family="Arial Black,Arial" font-weight="900" font-size="14" fill="white" text-anchor="middle">H</text>
+          <text x="36" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#E31837">Hotels</text>
+          <text x="83" y="24" font-family="Arial,sans-serif" font-weight="400" font-size="15" fill="#333">.com</text>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="6" width="22" height="22" rx="3" fill="#1B2B6B"/>
+          <text x="13" y="22" font-family="Georgia,serif" font-weight="700" font-size="13" fill="white" text-anchor="middle">V</text>
+          <text x="30" y="25" font-family="Georgia,serif" font-style="italic" font-weight="700" font-size="22" fill="#1B2B6B">rbo</text>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#333">wot</text>
+          <circle cx="71" cy="18" r="11" fill="#00A651"/>
+          <text x="71" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle">if</text>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 110 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6C15 6 12 9 12 13C12 16 14 19 18 24C22 19 24 16 24 13C24 9 21 6 18 6ZM18 15C16.9 15 16 14.1 16 13C16 11.9 16.9 11 18 11C19.1 11 20 11.9 20 13C20 14.1 19.1 15 18 15ZM9 15C7 15 6 17 6 18.5C6 21 7.5 23 9 25.5C10.5 23 12 21 12 18.5C12 17 11 15 9 15ZM27 15C25 15 24 17 24 18.5C24 21 25.5 23 27 25.5C28.5 23 30 21 30 18.5C30 17 29 15 27 15ZM18 26C15.5 26 13 27.5 12 29C13.5 30.5 15.5 31 18 31C20.5 31 22.5 30.5 24 29C23 27.5 20.5 26 18 26Z" fill="#FF5A5F"/>
+          <text x="38" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#484848">airbnb</text>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="6" y="22" font-family="Arial,sans-serif" font-weight="700" font-size="18" fill="#333">agoda</text>
+          <circle cx="12" cy="29" r="4" fill="#E31837"/>
+          <circle cx="22" cy="29" r="4" fill="#FF8C00"/>
+          <circle cx="32" cy="29" r="4" fill="#00A651"/>
+          <circle cx="42" cy="29" r="4" fill="#1B2B6B"/>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 140 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#003580">Booking</text>
+          <text x="80" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#E31837">.com</text>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 150 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="18" r="10" fill="#34E0A1"/>
+          <circle cx="12" cy="18" r="5" fill="white"/>
+          <circle cx="12" cy="18" r="2.5" fill="#333"/>
+          <text x="26" y="23" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#333">Tripadvisor</text>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="18" r="12" fill="#1B68DC"/>
+          <path d="M10 18 L16 10 L22 18" fill="white" opacity="0.9"/>
+          <path d="M10 20 L16 28 L22 20" fill="white" opacity="0.6"/>
+          <text x="32" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="16" fill="#1B68DC">Expedia</text>
+        </svg>
+      </div>
+      <div class="partner-logo">
+        <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="6" width="24" height="24" rx="4" fill="#0D2C54"/>
+          <text x="14" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="#B8973A" text-anchor="middle">EZ</text>
+          <text x="32" y="25" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#0D2C54">EZPZ Property</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUESTS -->
+<section id="guests">
+  <div class="container">
+    <div class="guests-grid">
+      <div class="guests-img-block">
+        <div class="guests-img-main" style="background:#0e2d50; padding:0; overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80&fit=crop" alt="Modern Melbourne apartment interior" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
+        </div>
+        <div class="guests-img-overlay">
+          <div class="overlay-stars">★★★★★</div>
+          <div class="overlay-rating">4.97</div>
+          <div class="overlay-label">Average Guest Rating</div>
+        </div>
+      </div>
+      <div class="guests-content">
+        <span class="section-label">For Our Guests</span>
+        <h2 class="section-title">A home in Melbourne, made better.</h2>
+        <p class="section-desc">Whether you're visiting for work, a big event, or a Melbourne escape — our properties are thoughtfully prepared and professionally managed for an exceptional stay.</p>
+        <div class="guests-features">
+          <div class="guest-feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.7 12.5a19.79 19.79 0 01-3.07-8.67A2 2 0 013.61 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.29 6.29l1.28-.95a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+            </div>
+            <div class="feat-body">
+              <h4>24/7 Guest Support</h4>
+              <p>A real person is always available — before, during, and after your stay.</p>
+            </div>
+          </div>
+          <div class="guest-feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="feat-body">
+              <h4>Hotel-Standard Cleanliness</h4>
+              <p>Professionally cleaned and stocked before every single arrival.</p>
+            </div>
+          </div>
+          <div class="guest-feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="feat-body">
+              <h4>Seamless Self Check-In</h4>
+              <p>Smart locks and clear arrival instructions mean no waiting around.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-layout">
+      <div class="reviews-intro-card">
+        <h2>Insights from Our Guests</h2>
+        <p>Genuine reviews from guests who've stayed in our Melbourne properties, shared directly from Airbnb and Booking.com.</p>
+        <div class="reviews-platform-badges">
+          <div class="platform-badge">
+            <span style="color:#FF5A5F; font-size:14px;">⬡</span> Airbnb
+          </div>
+          <div class="platform-badge">
+            <span style="color:#003580; font-weight:900; font-size:13px;">B</span>
+            <span style="color:#003580;">Booking</span><span style="color:#E31837;">.com</span>
+          </div>
+        </div>
+        <div style="margin-top:28px; display:flex; align-items:center; gap:12px; padding:16px; background:var(--blue-light); border-radius:10px;">
+          <div style="font-family:var(--font-display); font-size:2.2rem; font-weight:700; color:var(--navy); line-height:1;">4.97</div>
+          <div>
+            <div style="color:#2563EB; font-size:15px; letter-spacing:2px;">★★★★★</div>
+            <div style="font-size:12px; color:var(--gray-500); margin-top:2px;">Average across all platforms</div>
+          </div>
+        </div>
+      </div>
+      <div class="reviews-stack">
+        <!-- Review 1 -->
+        <div class="review-card">
+          <div class="review-platform">
+            <div class="airbnb-logo-inline">
+              <span class="airbnb-icon">♦</span>
+              <span class="airbnb-wordmark">airbnb</span>
+            </div>
+          </div>
+          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="review-quote">"Absolutely stunning apartment with incredible Yarra River views. The place was spotlessly clean, beautifully styled, and everything was exactly as described. The host was incredibly responsive and made check-in seamless. Will 100% be back."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#2563EB,#1a4880);">JL</div>
+            <div class="review-author-info">
+              <h4>James L.</h4>
+              <p>Southbank · Yarra River View Apartment</p>
+            </div>
+          </div>
+        </div>
+        <!-- Review 2 -->
+        <div class="review-card">
+          <div class="review-platform">
+            <div class="airbnb-logo-inline">
+              <span class="airbnb-icon">♦</span>
+              <span class="airbnb-wordmark">airbnb</span>
+            </div>
+          </div>
+          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="review-quote">"Helpful host. Great apartment. First class all round. The property was well-equipped, the location in Carlton was perfect for exploring Melbourne, and the communication before arrival was excellent. Couldn't fault a thing."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#B8973A,#8a6820);">SR</div>
+            <div class="review-author-info">
+              <h4>Sophie R.</h4>
+              <p>Carlton · Heritage Terrace</p>
+            </div>
+          </div>
+        </div>
+        <!-- Review 3 - Booking.com -->
+        <div class="review-card">
+          <div class="review-platform">
+            <span class="booking-wordmark" style="color:#003580;">Booking</span><span class="booking-wordmark" style="color:#E31837;">.com</span>
+          </div>
+          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="review-quote">"The apartment was very relaxing and cosy. I felt right at home and loved the walk to the restaurants and bars along the Yarra. The yard was tranquil and peaceful. Property management was incredibly professional — instant replies to every message."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#0f6b3c,#084828);">MK</div>
+            <div class="review-author-info">
+              <h4>Michael K.</h4>
+              <p>Docklands · Waterfront Studio</p>
+            </div>
+          </div>
+        </div>
+        <!-- Review 4 -->
+        <div class="review-card">
+          <div class="review-platform">
+            <div class="airbnb-logo-inline">
+              <span class="airbnb-icon">♦</span>
+              <span class="airbnb-wordmark">airbnb</span>
+            </div>
+          </div>
+          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="review-quote">"I stayed here for a work trip and it was absolutely perfect. Clean, modern, quiet — and the location in Fitzroy put me walking distance from everything I needed. The host thought of every little detail. This is exactly what a managed property should feel like."</p>
+          <div class="review-author">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">AT</div>
+            <div class="review-author-info">
+              <h4>Anna T.</h4>
+              <p>Fitzroy · Designer 2-Bed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI STRIP -->
+<section id="roi">
+  <div class="roi-inner">
+    <div class="roi-content">
+      <h2>Turn your property into a performing asset.</h2>
+      <p>Melbourne's short-stay market consistently outperforms traditional long-term tenancies. We know the inner city market inside out — and we'll show you exactly what your property can earn.</p>
+      <a href="#contact" class="btn-primary" style="background: var(--navy); color: var(--white);">Get Your Free Earnings Estimate</a>
+    </div>
+    <div class="roi-metrics">
+      <div class="roi-metric">
+        <div class="roi-val">38%</div>
+        <div class="roi-metric-label">Higher avg. income vs long-term rental</div>
+      </div>
+      <div class="roi-metric">
+        <div class="roi-val">$0</div>
+        <div class="roi-metric-label">Upfront cost to get started</div>
+      </div>
+      <div class="roi-metric">
+        <div class="roi-val">14</div>
+        <div class="roi-metric-label">Days to your first booking</div>
+      </div>
+      <div class="roi-metric">
+        <div class="roi-val">100%</div>
+        <div class="roi-metric-label">Transparent monthly reporting</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <span class="section-label">About The Trusted Host</span>
+        <h2 class="section-title">Built on trust.<br>Driven by results.</h2>
+        <p class="section-desc" style="margin-bottom: 0;">Founded by Alex in the heart of Melbourne, The Trusted Host was built on a simple conviction: property owners deserve a management partner they can truly rely on — one who treats their asset with the same care they would.</p>
+        <div class="about-values">
+          <div class="about-value">
+            <div class="value-num">01</div>
+            <div class="value-text">
+              <h4>Integrity above all</h4>
+              <p>We tell you the truth — about your property, the market, and what to expect. No fluff, no inflated promises.</p>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="value-num">02</div>
+            <div class="value-text">
+              <h4>Competent asset management</h4>
+              <p>We think like investors. Every decision is made with your ROI in mind, backed by Melbourne market data.</p>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="value-num">03</div>
+            <div class="value-text">
+              <h4>Hospitality as craft</h4>
+              <p>A five-star guest experience isn't an accident — it's a system we've built and refined across every property.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="heritage-crest">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Scottish-inspired shield crest -->
+            <path d="M40 4L10 18V40C10 57.6 23.4 73.6 40 78C56.6 73.6 70 57.6 70 40V18L40 4Z" fill="rgba(184,151,58,0.12)" stroke="#B8973A" stroke-width="1.5"/>
+            <!-- Cross of St Andrew hint (diagonal) -->
+            <path d="M20 20L60 60M60 20L20 60" stroke="rgba(184,151,58,0.25)" stroke-width="1.5"/>
+            <!-- Centre shield motif -->
+            <path d="M40 28L30 36V52H50V36L40 28Z" fill="rgba(184,151,58,0.5)"/>
+            <rect x="37" y="40" width="6" height="12" rx="1" fill="rgba(13,44,84,0.6)"/>
+            <!-- Small thistle crown at top -->
+            <circle cx="40" cy="14" r="3" fill="rgba(184,151,58,0.6)"/>
+            <path d="M38 12.5C38 12.5 37 10 40 9C43 10 42 12.5 42 12.5" fill="rgba(184,151,58,0.4)"/>
+          </svg>
+          <p>"A Scottish tradition of trust, honesty, and hard work — brought to Melbourne's finest properties."</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">AK</div>
+            <h4>Alex K.</h4>
+            <p>Founder & Host Director</p>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">SR</div>
+            <h4>Sarah R.</h4>
+            <p>Guest Experience Lead</p>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">JM</div>
+            <h4>James M.</h4>
+            <p>Operations Manager</p>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">TC</div>
+            <h4>Tara C.</h4>
+            <p>Listings & Revenue</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="section-label">Get In Touch</span>
+        <h2 class="section-title">Ready to see what your property can earn?</h2>
+        <p>Book a free 30-minute call with Alex. We'll walk through your property's potential, answer every question, and give you a clear earnings estimate — no obligation.</p>
+        <div class="contact-details">
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Melbourne CBD & Inner City</strong>
+              <p>Servicing Southbank, Docklands, Carlton, Fitzroy & surrounds</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.7 12.5a19.79 19.79 0 01-3.07-8.67A2 2 0 013.61 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.29 6.29l1.28-.95a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>+61 4XX XXX XXX</strong>
+              <p>Mon – Fri, 9am – 6pm AEST</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acc4c9c0c0c3ecd8c4c9d8ded9dfd8c9c8c4c3dfd882cfc3c182cdd9">[email&#160;protected]</a></strong>
+              <p>We respond within 2 business hours</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Book Your Free Discovery Call</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Alex">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="alex@example.com">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+61 4XX XXX XXX">
+        </div>
+        <div class="form-group">
+          <label>Property Suburb</label>
+          <input type="text" placeholder="e.g. Southbank, Docklands, Carlton...">
+        </div>
+        <div class="form-group">
+          <label>Property Type</label>
+          <select>
+            <option>Select property type</option>
+            <option>Studio / 1 Bedroom Apartment</option>
+            <option>2–3 Bedroom Apartment</option>
+            <option>Townhouse</option>
+            <option>House</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Anything else we should know? (optional)</label>
+          <textarea placeholder="Tell us a bit about your property or what you're hoping to achieve..."></textarea>
+        </div>
+        <button class="form-submit">Book My Free Call →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-name" style="font-family: 'Playfair Display', serif; color: rgba(255,255,255,0.85); font-weight: 600;">The Trusted Host</span>
+      <p>Melbourne's trusted short-stay property management partner. Your property, our hospitality.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#guests">For Guests</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Property Listing</a></li>
+        <li><a href="#">Guest Management</a></li>
+        <li><a href="#">Revenue Optimisation</a></li>
+        <li><a href="#">Housekeeping</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Areas</h4>
+      <ul>
+        <li><a href="#">Melbourne CBD</a></li>
+        <li><a href="#">Southbank</a></li>
+        <li><a href="#">Docklands</a></li>
+        <li><a href="#">Carlton & Fitzroy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 The Trusted Host Pty Ltd. All rights reserved.</span>
+    <span><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  /* ── HERO CANVAS: floating particles + light beams ── */
+  (function() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      const section = document.getElementById('home');
+      W = canvas.width = section.offsetWidth;
+      H = canvas.height = section.offsetHeight;
+    }
+
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.8 + 0.4;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.alpha = Math.random() * 0.45 + 0.1;
+      this.gold = Math.random() > 0.82;
+    }
+
+    function init() {
+      particles = [];
+      for (let i = 0; i < 90; i++) particles.push(new Particle());
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      /* light beams */
+      [{x: W*0.68, a:-0.35, op:0.045},{x:W*0.88,a:-0.25,op:0.03}].forEach(b => {
+        ctx.save();
+        ctx.translate(b.x, 0);
+        ctx.rotate(b.a);
+        const g = ctx.createLinearGradient(0,0,0,H);
+        g.addColorStop(0,`rgba(37,99,235,${b.op})`);
+        g.addColorStop(1,'rgba(37,99,235,0)');
+        ctx.fillStyle=g; ctx.fillRect(-70,0,140,H*1.5);
+        ctx.restore();
+      });
+
+      /* connections */
+      for (let i=0;i<particles.length;i++) {
+        for (let j=i+1;j<particles.length;j++) {
+          const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+          const d=Math.sqrt(dx*dx+dy*dy);
+          if(d<130){
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x,particles[i].y);
+            ctx.lineTo(particles[j].x,particles[j].y);
+            ctx.strokeStyle=`rgba(255,255,255,${0.055*(1-d/130)})`;
+            ctx.lineWidth=0.5; ctx.stroke();
+          }
+        }
+      }
+
+      /* particles */
+      particles.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+        if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=p.gold?`rgba(184,151,58,${p.alpha})`:`rgba(255,255,255,${p.alpha})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize',()=>{resize();init();});
+    resize(); init(); draw();
+  })();
+</script>
+
+<!-- FLOATING GET STARTED BUTTON -->
+<button class="float-btn" onclick="document.getElementById('valuationModal').classList.add('open')">Get<br>Started</button>
+
+<!-- VALUATION MODAL -->
+<div class="modal-overlay" id="valuationModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--blue); margin-bottom:6px;">Free Property Valuation</div>
+        <div style="font-family:var(--font-display); font-size:1.3rem; font-weight:600; color:var(--navy);">Get Your Earnings Estimate</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Step indicator -->
+      <div class="step-indicator">
+        <div class="step-dot active" id="dot-1"></div>
+        <div class="step-dot" id="dot-2"></div>
+        <div class="step-dot" id="dot-3"></div>
+        <div class="step-dot" id="dot-4"></div>
+      </div>
+
+      <!-- Step 1: Owner? -->
+      <div class="step-panel active" id="step-1">
+        <div class="step-q">Step 1 of 4</div>
+        <div class="step-title">Are you the owner of the property?</div>
+        <div class="choice-grid">
+          <div class="choice-btn" onclick="selectChoice(this,'owner','yes')">
+            <span class="choice-icon">🏠</span>
+            <span class="choice-label">Yes, I own it</span>
+          </div>
+          <div class="choice-btn" onclick="selectChoice(this,'owner','no')">
+            <span class="choice-icon">🤝</span>
+            <span class="choice-label">No, acting on behalf</span>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="step-next" onclick="nextStep(2)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Property type -->
+      <div class="step-panel" id="step-2">
+        <div class="step-q">Step 2 of 4</div>
+        <div class="step-title">What type of property is it?</div>
+        <div class="choice-grid">
+          <div class="choice-btn" onclick="selectChoice(this,'type','house')">
+            <span class="choice-icon">🏡</span>
+            <span class="choice-label">House</span>
+          </div>
+          <div class="choice-btn" onclick="selectChoice(this,'type','apartment')">
+            <span class="choice-icon">🏢</span>
+            <span class="choice-label">Apartment</span>
+          </div>
+          <div class="choice-btn" onclick="selectChoice(this,'type','townhouse')">
+            <span class="choice-icon">🏘</span>
+            <span class="choice-label">Townhouse</span>
+          </div>
+          <div class="choice-btn" onclick="selectChoice(this,'type','other')">
+            <span class="choice-icon">🔑</span>
+            <span class="choice-label">Other</span>
+          </div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div class="step-q" style="margin-top:4px;">Furnished?</div>
+          <div class="choice-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="choice-btn" onclick="selectChoice(this,'furnished','yes')">
+              <span class="choice-icon">🛋</span>
+              <span class="choice-label">Furnished</span>
+            </div>
+            <div class="choice-btn" onclick="selectChoice(this,'furnished','no')">
+              <span class="choice-icon">📦</span>
+              <span class="choice-label">Vacant / Unfurnished</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="step-back" onclick="nextStep(1)">← Back</button>
+          <button class="step-next" onclick="nextStep(3)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Property details -->
+      <div class="step-panel" id="step-3">
+        <div class="step-q">Step 3 of 4</div>
+        <div class="step-title">Tell us about your property</div>
+        <div class="form-group-modal">
+          <label>Suburb / Postcode</label>
+          <input type="text" placeholder="e.g. Southbank 3006">
+        </div>
+        <div class="form-group-modal">
+          <label>Property Address (optional)</label>
+          <input type="text" placeholder="Street address">
+        </div>
+        <div class="form-row-modal">
+          <div class="form-group-modal">
+            <label>Bedrooms</label>
+            <select>
+              <option>Studio</option>
+              <option>1</option>
+              <option selected>2</option>
+              <option>3</option>
+              <option>4+</option>
+            </select>
+          </div>
+          <div class="form-group-modal">
+            <label>Bathrooms</label>
+            <select>
+              <option>1</option>
+              <option selected>2</option>
+              <option>3+</option>
+            </select>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="step-back" onclick="nextStep(2)">← Back</button>
+          <button class="step-next" onclick="nextStep(4)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Contact details -->
+      <div class="step-panel" id="step-4">
+        <div class="step-q">Step 4 of 4</div>
+        <div class="step-title">Almost done — how should we reach you?</div>
+        <p style="font-size:14px; color:var(--gray-500); margin-bottom:20px; line-height:1.6;">We'll review your property details and contact you within 24 hours with a personalised earnings estimate.</p>
+        <div class="form-row-modal">
+          <div class="form-group-modal">
+            <label>First Name</label>
+            <input type="text" placeholder="Alex">
+          </div>
+          <div class="form-group-modal">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith">
+          </div>
+        </div>
+        <div class="form-group-modal">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+61 4XX XXX XXX">
+        </div>
+        <div class="form-group-modal">
+          <label>Email Address</label>
+          <input type="email" placeholder="alex@example.com">
+        </div>
+        <div style="margin:16px 0; font-size:12px; color:var(--gray-500);">
+          <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+            <input type="checkbox" style="width:auto; margin-top:2px;"> By submitting, you agree to our Terms &amp; Privacy Policy.
+          </label>
+        </div>
+        <div class="step-nav">
+          <button class="step-back" onclick="nextStep(3)">← Back</button>
+          <button class="step-next" onclick="submitForm()" style="background:var(--gold); color:var(--navy);">Get My Free Estimate →</button>
+        </div>
+      </div>
+
+      <!-- Success -->
+      <div class="step-panel" id="step-success">
+        <div class="success-panel">
+          <div class="success-icon">✅</div>
+          <h3>You're all set, Alex!</h3>
+          <p>We've received your property details and will be in touch within <strong>24 hours</strong> with your personalised earnings estimate.</p>
+          <p style="margin-top:12px;">In the meantime, feel free to explore our services or call us on <strong>+61 4XX XXX XXX</strong>.</p>
+          <button onclick="closeModal()" style="margin-top:28px; background:var(--navy); color:white; border:none; border-radius:8px; padding:14px 36px; font-family:var(--font-body); font-size:15px; font-weight:600; cursor:pointer;">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentStep = 1;
+  function nextStep(n) {
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    currentStep = n;
+    document.getElementById('step-' + currentStep).classList.add('active');
+    for (let i = 1; i <= 4; i++) {
+      const dot = document.getElementById('dot-' + i);
+      if (i < currentStep) { dot.className = 'step-dot done'; }
+      else if (i === currentStep) { dot.className = 'step-dot active'; }
+      else { dot.className = 'step-dot'; }
+    }
+    document.querySelector('.modal-box').scrollTop = 0;
+  }
+  function submitForm() {
+    document.getElementById('step-4').classList.remove('active');
+    document.getElementById('step-success').classList.add('active');
+    for (let i = 1; i <= 4; i++) document.getElementById('dot-' + i).className = 'step-dot done';
+  }
+  function closeModal() {
+    document.getElementById('valuationModal').classList.remove('open');
+    setTimeout(() => {
+      [1,2,3,4].forEach(n => document.getElementById('step-' + n).classList.remove('active'));
+      document.getElementById('step-success').classList.remove('active');
+      currentStep = 1;
+      document.getElementById('step-1').classList.add('active');
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('dot-' + i).className = i === 1 ? 'step-dot active' : 'step-dot';
+      }
+    }, 300);
+  }
+  function selectChoice(el, group, val) {
+    el.closest('.choice-grid').querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  document.getElementById('valuationModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
